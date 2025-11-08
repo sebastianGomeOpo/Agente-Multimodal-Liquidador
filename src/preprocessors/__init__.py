@@ -2,5 +2,5 @@
 preprocessors/__init__.py
 """
 
+# Se eliminan las importaciones de pdf_to_image, ya que no se usan más.
 from src.preprocessors.excel_to_image import excel_to_image, process_all_excels
-from src.preprocessors.pdf_to_image import pdf_to_images, process_all_pdfs, get_pdf_info # <-- ¡AÑADIDO AQUÍ

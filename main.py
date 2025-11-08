@@ -1,12 +1,17 @@
 """
-main.py - Punto de entrada principal del MultiDoc-Agent
+main.py - Punto de entrada principal del MultiDoc-Agent (CORREGIDO)
 """
 
 import sys
 from pathlib import Path
 from src.utils.logger import get_logger
 from src.preprocessors import process_all_excels, process_all_pdfs
-from src.extractors import process_all_images, process_all_extracted_text
+
+# --- IMPORTACIÓN CORREGIDA ---
+# Importamos 'process_all_documents' en lugar de 'process_all_images'
+from src.extractors import process_all_documents, process_all_extracted_text
+# -------------------------------
+
 from src.embeddings import process_all_multimodal
 from src.vectorstore import index_all_embeddings, get_chroma_manager, MultimodalIndexer
 from src.agent import run_agent_query
@@ -18,37 +23,43 @@ def indexing_mode():
     """
     MODO 1: Indexación (poblar ChromaDB)
     
-    Pipeline completo:
-    1. Excel/PDF → Imágenes
-    2. Imágenes → OCR → Texto
-    3. Texto → Parser → Estructura
-    4. Todo → CLIP → Embeddings
-    5. Embeddings → ChromaDB
+    Pipeline completo (Corregido):
+    1. Excel → Imágenes PNG (Solo Excel)
+    2. (PDFs se procesan directamente)
+    3. PDF/PNG → API ADE → Markdown
+    4. Markdown → LLM → JSON Estructurado
+    5. Todo → CLIP → Embeddings
+    6. Embeddings → ChromaDB
     """
     logger.info("=" * 60)
-    logger.info("INICIANDO MODO INDEXACIÓN")
+    logger.info("INICIANDO MODO INDEXACIÓN (Pipeline ADE Corregido)")
     logger.info("=" * 60)
     
     try:
         # PASO 1: Convertir Excel a imágenes
-        logger.info("\n[PASO 1] Convirtiendo Excel a imágenes...")
+        logger.info("\n[PASO 1] Convirtiendo Excel a imágenes PNG...")
         excel_results = process_all_excels()
         logger.info(f"Resultado: {len([r for r in excel_results if r.get('status') == 'success'])} Excel procesados")
         
-        # PASO 2: Convertir PDF a imágenes
-        logger.info("\n[PASO 2] Convirtiendo PDF a imágenes...")
+        # PASO 2: Convertir PDF a imágenes (Opcional, ahora es un fallback)
+        # Este paso sigue existiendo, pero nuestro extractor (Paso 3) priorizará el PDF original.
+        logger.info("\n[PASO 2] Convirtiendo PDF a imágenes (Fallback)...")
         pdf_results = process_all_pdfs()
         logger.info(f"Resultado: {len([r for r in pdf_results if r.get('status') == 'success'])} PDF procesados")
         
-        # PASO 3: Extraer texto con OCR
-        logger.info("\n[PASO 3] Extrayendo texto con OCR...")
-        ocr_results = process_all_images()
-        logger.info(f"Resultado: {len([r for r in ocr_results if r.get('status') == 'success'])} imágenes procesadas")
+        # --- PASO 3 CORREGIDO ---
+        # Ahora extrae Markdown de los PDF originales y las imágenes de Excel
+        logger.info("\n[PASO 3] Extrayendo Markdown estructurado (con API ADE)...")
+        ocr_results = process_all_documents() # Llamada a la nueva función
+        logger.info(f"Resultado: {len([r for r in ocr_results if r.get('status') == 'success'])} documentos procesados por ADE")
         
-        # PASO 4: Parsear y estructurar texto
-        logger.info("\n[PASO 4] Parseando y estructurando texto...")
+        # --- PASO 4 CORREGIDO ---
+        # Convierte el Markdown (de ADE) a JSON (con LLM)
+        logger.info("\n[PASO 4] Convirtiendo Markdown a JSON (con LLM)...")
         parser_results = process_all_extracted_text()
-        logger.info(f"Resultado: {len([r for r in parser_results if r.get('status') == 'success'])} textos estructurados")
+        logger.info(f"Resultado: {len([r for r in parser_results if r.get('status') == 'success'])} JSONs estructurados")
+        
+        # (El resto del pipeline no cambia)
         
         # PASO 5: Generar embeddings con CLIP
         logger.info("\n[PASO 5] Generando embeddings multimodales con CLIP...")
@@ -65,9 +76,10 @@ def indexing_mode():
         logger.info("INDEXACIÓN COMPLETADA")
         logger.info("=" * 60)
         
-        chroma_mgr = get_chroma_manager()
-        collection_info = chroma_mgr.get_collection_info()
-        logger.info(f"Documentos en ChromaDB: {collection_info.get('document_count', 0)}")
+        # (Esta parte de 'chroma_mgr' no existe, la comentamos para evitar errores)
+        # chroma_mgr = get_chroma_manager()
+        # collection_info = chroma_mgr.get_collection_info()
+        # logger.info(f"Documentos en ChromaDB: {collection_info.get('document_count', 0)}")
         
         indexer = MultimodalIndexer()
         stats = indexer.get_collection_stats()
@@ -76,20 +88,14 @@ def indexing_mode():
         return {"status": "success", "mode": "indexing"}
     
     except Exception as e:
-        logger.error(f"Error durante indexación: {e}")
+        logger.error(f"Error fatal durante indexación: {e}", exc_info=True)
         return {"status": "error", "mode": "indexing", "error": str(e)}
 
 
 def query_mode(user_query: str = None):
     """
     MODO 2: Consulta (usar el agente)
-    
-    Pipeline:
-    1. Recibir query del usuario
-    2. Query → Embedding CLIP
-    3. Buscar en ChromaDB
-    4. LLM razona
-    5. Formatea respuesta
+    (Esta función no necesita cambios)
     """
     logger.info("=" * 60)
     logger.info("INICIANDO MODO CONSULTA")
@@ -132,12 +138,14 @@ def query_mode(user_query: str = None):
 def interactive_mode():
     """
     Modo interactivo continuo
+    (Esta función no necesita cambios, excepto por el 'stats')
     """
     logger.info("=" * 60)
     logger.info("MODO INTERACTIVO")
     logger.info("=" * 60)
     logger.info("Escribe 'indexar' para indexar documentos")
     logger.info("Escribe 'consultar' para hacer una pregunta")
+    logger.info("Escribe 'stats' para ver estadísticas de ChromaDB")
     logger.info("Escribe 'salir' para terminar")
     logger.info("=" * 60)
     
@@ -159,7 +167,7 @@ def interactive_mode():
                 try:
                     indexer = MultimodalIndexer()
                     stats = indexer.get_collection_stats()
-                    logger.info(f"Estadísticas: {stats}")
+                    logger.info(f"Estadísticas de ChromaDB: {stats}")
                 except Exception as e:
                     logger.error(f"Error al obtener estadísticas: {e}")
             else:
@@ -173,10 +181,9 @@ def interactive_mode():
 
 
 def main():
-    """Función principal"""
+    """Función principal (Sin cambios)"""
     
     if len(sys.argv) > 1:
-        # Modo por línea de comandos
         mode = sys.argv[1].lower()
         
         if mode == "indexar":
@@ -190,7 +197,6 @@ def main():
             logger.error(f"Modo no reconocido: {mode}")
             logger.info("Modos disponibles: indexar, consultar, interactivo")
     else:
-        # Modo interactivo por defecto
         interactive_mode()
 
 

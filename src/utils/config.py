@@ -16,11 +16,10 @@ SRC_DIR = BASE_DIR / "src"
 # ============= RUTAS DE DATOS =============
 INPUT_DIR = DATA_DIR / "input"
 INPUT_EXCEL_DIR = INPUT_DIR / "excel"
-INPUT_PDF_DIR = INPUT_DIR / "pdf"
+INPUT_PDF_DIR = INPUT_DIR / "pdf" # PDFs originales
 
 IMAGES_DIR = DATA_DIR / "images"
-EXCEL_IMAGES_DIR = IMAGES_DIR / "excel_images"
-PDF_IMAGES_DIR = IMAGES_DIR / "pdf_images"
+EXCEL_IMAGES_DIR = IMAGES_DIR / "excel_images" # Solo para Excel
 
 PROCESSED_DIR = DATA_DIR / "processed"
 EXTRACTED_TEXT_DIR = PROCESSED_DIR / "extracted_text"
@@ -34,8 +33,9 @@ REPORTS_DIR = OUTPUT_DIR / "reports"
 CHROMA_PERSIST_DIR = BASE_DIR / "chromadb_storage"
 
 # ============= CREAR DIRECTORIOS =============
+# Se elimina PDF_IMAGES_DIR de la creación
 for directory in [
-    INPUT_EXCEL_DIR, INPUT_PDF_DIR, EXCEL_IMAGES_DIR, PDF_IMAGES_DIR,
+    INPUT_EXCEL_DIR, INPUT_PDF_DIR, EXCEL_IMAGES_DIR,
     EXTRACTED_TEXT_DIR, EXTRACTED_TABLES_DIR, EMBEDDINGS_DIR,
     RESPONSES_DIR, REPORTS_DIR, CHROMA_PERSIST_DIR
 ]:
@@ -48,7 +48,7 @@ LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4")
 # ============= CONFIGURACIÓN DE API KEYS =============
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 LANDING_AI_API_KEY = os.getenv("LANDING_AI_API_KEY")
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+# DEEPSEEK_API_KEY (eliminado)
 
 # ============= CONFIGURACIÓN DE CHROMADB =============
 CHROMA_COLLECTION_NAME = os.getenv("CHROMA_COLLECTION_NAME", "multidoc_collection")
@@ -59,8 +59,8 @@ EMBEDDING_DIMENSION = 512  # CLIP base-32 produce 512 dimensiones
 EMBEDDING_BATCH_SIZE = 32
 
 # ============= CONFIGURACIÓN DE OCR =============
-OCR_PROVIDER = os.getenv("OCR_PROVIDER", "landing_ai")  # landing_ai o deepseek
-OCR_CONFIDENCE_THRESHOLD = 0.7
+OCR_PROVIDER = os.getenv("OCR_PROVIDER", "landing_ai")
+# OCR_CONFIDENCE_THRESHOLD (eliminado)
 
 # ============= CONFIGURACIÓN DE LOGGING =============
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")

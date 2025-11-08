@@ -1,35 +1,224 @@
-2025-11-07 21:39:37,962 - src.preprocessors.excel_to_image - INFO - Iniciando conversión de Excel: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\excel\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).xlsx
-2025-11-07 21:39:38,672 - src.preprocessors.excel_to_image - INFO - Usando rango: A1:Z100
-2025-11-07 21:39:38,678 - src.preprocessors.excel_to_image - INFO - Excel procesado: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)
-2025-11-07 21:43:58,103 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
-2025-11-07 21:43:59,910 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
-2025-11-07 21:43:59,982 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
-2025-11-07 21:43:59,983 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
-2025-11-07 21:44:24,549 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
-2025-11-07 21:44:25,789 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
-2025-11-07 21:44:25,818 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
-2025-11-07 21:44:25,820 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
-2025-11-07 21:44:25,822 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
-2025-11-07 21:44:26,963 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
-2025-11-07 21:44:27,019 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
-2025-11-07 21:44:27,021 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
-2025-11-07 21:44:27,024 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
-2025-11-07 21:44:28,221 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
-2025-11-07 21:44:28,317 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
-2025-11-07 21:44:28,318 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
-2025-11-07 21:44:28,321 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
-2025-11-07 21:44:29,710 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
-2025-11-07 21:44:29,915 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
-2025-11-07 21:44:29,917 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
-2025-11-07 22:19:01,909 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
-2025-11-07 22:19:01,912 - src.extractors.ocr_extractor - ERROR - Falta LANDING_AI_API_KEY en el archivo .env
-2025-11-07 22:27:33,766 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
-2025-11-07 22:27:33,768 - src.extractors.ocr_extractor - ERROR - Falta LANDING_AI_API_KEY en el archivo .env
-2025-11-07 22:27:58,538 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
-2025-11-07 22:27:58,541 - src.extractors.ocr_extractor - ERROR - Falta LANDING_AI_API_KEY en el archivo .env
-2025-11-07 22:31:30,359 - src.preprocessors.excel_to_image - INFO - Iniciando conversión de Excel: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\excel\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).xlsx
-2025-11-07 22:31:31,068 - src.preprocessors.excel_to_image - INFO - Usando rango: A1:Z100
-2025-11-07 22:31:31,074 - src.preprocessors.excel_to_image - INFO - Excel procesado: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)
-2025-11-07 22:35:37,339 - src.preprocessors.excel_to_image - INFO - Iniciando conversión de Excel: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\excel\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).xlsx
-2025-11-07 22:35:38,014 - src.preprocessors.excel_to_image - INFO - Usando rango: A1:Z100
-2025-11-07 22:35:38,020 - src.preprocessors.excel_to_image - INFO - Excel procesado: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)
+
+2025-11-07 23:13:54,836 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 23:13:56,373 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 23:13:56,452 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 23:13:56,455 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 23:15:43,856 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 23:15:45,020 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 23:15:45,050 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 23:15:45,052 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 23:15:45,054 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 23:15:46,220 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 23:15:46,287 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 23:15:46,289 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 23:15:46,293 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 23:15:47,554 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 23:15:47,651 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 23:15:47,653 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 23:15:47,656 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 23:15:49,149 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 23:15:49,351 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 23:15:49,352 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 23:16:23,947 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-07 23:16:27,636 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).png
+2025-11-07 23:16:33,436 - src.extractors.ocr_extractor - ERROR - Error con la API de Landing AI: 401 Client Error: Unauthorized for url: https://api.landing.ai/v1/document_understanding
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 115, in _extract_landing_ai
+    response.raise_for_status() # Lanza un error si la respuesta no es 2xx
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.landing.ai/v1/document_understanding
+2025-11-07 23:23:30,939 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).png
+2025-11-07 23:23:36,410 - src.extractors.ocr_extractor - ERROR - Error con la API de Landing AI: 401 Client Error: Unauthorized for url: https://api.landing.ai/v1/document_understanding
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 115, in _extract_landing_ai
+    response.raise_for_status() # Lanza un error si la respuesta no es 2xx
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.landing.ai/v1/document_understanding
+2025-11-07 23:24:13,716 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-07 23:25:14,081 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).png
+2025-11-07 23:25:15,603 - src.extractors.ocr_extractor - ERROR - Error con la API de Landing AI: 401 Client Error: Unauthorized for url: https://api.landing.ai/v1/document_understanding
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 115, in _extract_landing_ai
+    response.raise_for_status() # Lanza un error si la respuesta no es 2xx
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.landing.ai/v1/document_understanding
+2025-11-07 23:41:23,854 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-07 23:41:24,483 - src.extractors.ocr_extractor - INFO - Cliente 'LandingAIADE' inicializado.
+2025-11-07 23:41:24,516 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).png
+2025-11-07 23:41:25,296 - src.extractors.ocr_extractor - ERROR - Error con la API de LandingAI ADE: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 88, in _extract_landing_ai
+    response = self.client.parse(
+        document=image_path, # CHANGED: Pasamos la ruta del archivo
+        model="dpt-2-latest" # Modelo de la documentación
+    )
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_client.py", line 380, in parse
+    return self.post(
+           ~~~~~~~~~^
+        "/v1/ade/parse",
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cast_to=ParseResponse,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+landingai_ade.UnprocessableEntityError: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+2025-11-07 23:48:51,557 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-07 23:48:52,179 - src.extractors.ocr_extractor - INFO - Cliente 'LandingAIADE' inicializado.
+2025-11-07 23:48:52,235 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).png
+2025-11-07 23:48:52,961 - src.extractors.ocr_extractor - ERROR - Error con la API de LandingAI ADE: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 88, in _extract_landing_ai
+    response = self.client.parse(
+        document=image_path, # CHANGED: Pasamos la ruta del archivo
+        model="dpt-2-latest" # Modelo de la documentación
+    )
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_client.py", line 380, in parse
+    return self.post(
+           ~~~~~~~~~^
+        "/v1/ade/parse",
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cast_to=ParseResponse,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+landingai_ade.UnprocessableEntityError: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+2025-11-07 23:50:31,288 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 23:50:31,946 - src.extractors.ocr_extractor - ERROR - Error con la API de LandingAI ADE: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 88, in _extract_landing_ai
+    response = self.client.parse(
+        document=image_path, # CHANGED: Pasamos la ruta del archivo
+        model="dpt-2-latest" # Modelo de la documentación
+    )
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_client.py", line 380, in parse
+    return self.post(
+           ~~~~~~~~~^
+        "/v1/ade/parse",
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cast_to=ParseResponse,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+landingai_ade.UnprocessableEntityError: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+2025-11-07 23:55:07,205 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-07 23:55:07,805 - src.extractors.ocr_extractor - INFO - Cliente 'LandingAIADE' inicializado.
+2025-11-07 23:55:12,044 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 23:55:12,910 - src.extractors.ocr_extractor - ERROR - Error con la API de LandingAI ADE: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 88, in _extract_landing_ai
+    response = self.client.parse(
+        document=image_path, # CHANGED: Pasamos la ruta del archivo
+        model="dpt-2-latest" # Modelo de la documentación
+    )
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_client.py", line 380, in parse
+    return self.post(
+           ~~~~~~~~~^
+        "/v1/ade/parse",
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cast_to=ParseResponse,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+landingai_ade.UnprocessableEntityError: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+2025-11-08 00:00:22,622 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 00:00:23,317 - src.extractors.ocr_extractor - ERROR - Error con la API de LandingAI ADE: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 88, in _extract_landing_ai
+    response = self.client.parse(
+        document=image_path, # CHANGED: Pasamos la ruta del archivo
+        model="dpt-2-latest" # Modelo de la documentación
+    )
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_client.py", line 380, in parse
+    return self.post(
+           ~~~~~~~~~^
+        "/v1/ade/parse",
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cast_to=ParseResponse,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+landingai_ade.UnprocessableEntityError: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+2025-11-08 00:11:07,143 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: LiquidacionData
+2025-11-08 00:12:32,040 - src.extractors.ocr_extractor - INFO - Extrayendo texto de: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 00:12:32,681 - src.extractors.ocr_extractor - ERROR - Error con la API de LandingAI ADE: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\ocr_extractor.py", line 88, in _extract_landing_ai
+    response = self.client.parse(
+        document=image_path, # CHANGED: Pasamos la ruta del archivo
+        model="dpt-2-latest" # Modelo de la documentación
+    )
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_client.py", line 380, in parse
+    return self.post(
+           ~~~~~~~~~^
+        "/v1/ade/parse",
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cast_to=ParseResponse,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\landingai_ade\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+landingai_ade.UnprocessableEntityError: Error code: 422 - {'error': 'Unsupported or unrecognizable file format: upload. Supported formats: BMP, DCX, DDS, DIB, DOC, DOCX, GIF, ICNS, JP2, JPEG, JPG, ODP, ODT, PCX, PDF, PNG, PPM, PPT, PPTX, PSD, RTF, TGA, TIFF, WEBP'}
+2025-11-08 00:12:46,641 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: LiquidacionData
+2025-11-08 00:30:17,144 - __main__ - INFO - ADE procesó exitosamente: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 00:31:32,593 - __main__ - INFO - ADE procesó exitosamente: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 00:38:12,501 - __main__ - ERROR - Error de red al contactar ADE con imagen: HTTPSConnectionPool(host='api.va.landing.ai', port=443): Read timed out. (read timeout=60)
+2025-11-08 00:38:24,262 - __main__ - INFO - ADE procesó exitosamente la imagen: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-08 00:45:49,834 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 00:45:51,465 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-08 00:45:51,527 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-08 00:45:51,529 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-08 01:03:09,152 - __main__ - ERROR - Archivo de imagen no encontrado: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).png
+2025-11-08 01:03:18,684 - __main__ - INFO - ADE procesó exitosamente la imagen: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-08 01:04:15,605 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-08 01:04:16,219 - src.extractors.ocr_extractor - INFO - Cliente 'LandingAIADE' inicializado.
+2025-11-08 01:04:49,254 - __main__ - INFO - ADE procesó exitosamente: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 01:05:34,915 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 01:05:57,654 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 01:06:10,553 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 01:06:51,043 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 01:07:14,762 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 01:07:52,279 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 01:08:10,291 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 01:08:22,453 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 01:08:29,739 - __main__ - INFO - ADE procesó exitosamente la imagen: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png

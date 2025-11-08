@@ -6,10 +6,9 @@ from typing import Any
 from src.utils.logger import get_logger
 from src.embeddings.clip_encoder import CLIPEncoder
 from src.vectorstore.multimodal_indexer import MultimodalIndexer
-from src.agent.tools import (
-    calculate_totals, validate_dates, compare_values,
-    extract_key_info, search_by_metadata
-)
+# El bloque de importación de 'src.agent.tools' se ha eliminado
+# ya que estas funciones no se usan directamente en este archivo
+# y causan un ImportError.
 
 logger = get_logger(__name__)
 

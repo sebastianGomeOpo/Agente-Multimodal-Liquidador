@@ -10,7 +10,8 @@ from transformers import CLIPProcessor, CLIPModel
 from src.utils.logger import get_logger
 from src.utils.config import (
     CLIP_MODEL_NAME, EMBEDDING_DIMENSION, EMBEDDING_BATCH_SIZE,
-    EXTRACTED_TABLES_DIR, EXCEL_IMAGES_DIR, PDF_IMAGES_DIR, EMBEDDINGS_DIR
+    EXTRACTED_TABLES_DIR, EXCEL_IMAGES_DIR, EMBEDDINGS_DIR
+    # Se elimina PDF_IMAGES_DIR
 )
 
 logger = get_logger(__name__)
@@ -253,22 +254,24 @@ def save_embeddings(embeddings: dict, output_file: str) -> bool:
 def process_all_multimodal() -> dict:
     """
     Procesa todas las imágenes y textos para generar embeddings
+    (CORREGIDO: Ya no procesa imágenes de PDF)
     
     Returns:
         dict: Resumen del procesamiento
     """
     encoder = CLIPEncoder()
     
-    # Procesar imágenes
+    # Procesar imágenes (SOLO DE EXCEL)
     excel_images = list(EXCEL_IMAGES_DIR.glob("*.png"))
-    pdf_images = list(PDF_IMAGES_DIR.glob("*.png"))
-    all_images = [str(img) for img in excel_images + pdf_images]
+    # pdf_images (eliminado)
+    all_images = [str(img) for img in excel_images] # <- CORREGIDO
     
-    logger.info(f"Procesando {len(all_images)} imágenes totales")
+    logger.info(f"Procesando {len(all_images)} imágenes totales (solo Excel)")
     
     image_embeddings = encoder.batch_encode_images(all_images)
     
     # Procesar textos extraídos
+    # (Esta parte está bien, lee los JSON del Paso 4)
     text_files = list(EXTRACTED_TABLES_DIR.glob("*_structure.json"))
     texts = []
     
@@ -276,14 +279,18 @@ def process_all_multimodal() -> dict:
     for text_file in text_files:
         try:
             with open(text_file, 'r', encoding='utf-8') as f:
+                # CORRECCIÓN SUTIL: El texto para embedding debe ser el JSON completo
+                # (o el markdown original), no solo 'raw_text'.
+                # Vamos a usar el JSON estructurado como texto, es más rico.
                 data = json.load(f)
-                raw_text = data.get("raw_text", "")
-                if raw_text:
-                    texts.append(raw_text)
+                # Convertir el dict de JSON a un string de texto
+                text_content = json.dumps(data) 
+                if text_content:
+                    texts.append(text_content)
         except Exception as e:
             logger.warning(f"Error al leer {text_file}: {e}")
     
-    logger.info(f"Procesando {len(texts)} textos")
+    logger.info(f"Procesando {len(texts)} textos (desde JSON estructurados)")
     
     text_embeddings = encoder.batch_encode_texts(texts)
     

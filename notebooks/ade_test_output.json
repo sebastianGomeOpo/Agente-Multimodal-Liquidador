@@ -1,0 +1,681 @@
+[
+  {
+    "status": "success",
+    "provider": "landing_ai_ade",
+    "text": "<a id='2ecfbdec-791b-42bd-a4ed-dac6b8bbdbfb'></a>\n\n<::logo: TISUR\nTISUR\nA green circle with white horizontal lines forming a stylized 'T' or wave, next to the bold green text \"TISUR\".::>\n\n<a id='352ad748-c56a-40d4-af87-66ceda8b90bf'></a>\n\n<::logo: LAS BAMBAS\nLAS BAMBAS\nThe logo features three arch-like shapes in red, orange, and green, sitting on a blue curved line::>\n\n<a id='43070529-f034-46eb-ab6b-f9593d056b15'></a>\n\n<table id=\"0-1\">\n<tr><td id=\"0-2\" colspan=\"10\">Liquidacion Naves - Las Bambas 2025</td></tr>\n<tr><td id=\"0-3\">Nombre de la Nave</td><td id=\"0-4\">Lote</td><td id=\"0-5\">Fecha</td><td id=\"0-6\">Tonelaje</td><td id=\"0-7\">Factura</td><td id=\"0-8\">Servicio</td><td id=\"0-9\">Tarifa</td><td id=\"0-a\">Monto US$ sin IGV</td><td id=\"0-b\">PO</td><td id=\"0-c\">SES</td></tr>\n<tr><td id=\"0-d\">SKY KNIGHT</td><td id=\"0-e\">25105</td><td id=\"0-f\">10/10/2025</td><td id=\"0-g\">11,002.37</td><td id=\"0-h\">F105-00015623</td><td id=\"0-i\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-j\">26.79</td><td id=\"0-k\">294,753.49</td><td id=\"0-l\">4400613943</td><td id=\"0-m\">1000657130</td></tr>\n<tr><td id=\"0-n\">SKY KNIGHT</td><td id=\"0-o\">25106</td><td id=\"0-p\">10/10/2025</td><td id=\"0-q\">11,001.04</td><td id=\"0-r\">F105-00015624</td><td id=\"0-s\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-t\">26.79</td><td id=\"0-u\">294,717.86</td><td id=\"0-v\">4400613943</td><td id=\"0-w\">1000657131</td></tr>\n<tr><td id=\"0-x\">SKY KNIGHT</td><td id=\"0-y\">25107</td><td id=\"0-z\">10/10/2025</td><td id=\"0-A\">11,000.54</td><td id=\"0-B\">F105-00015625</td><td id=\"0-C\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-D\">26.79</td><td id=\"0-E\">294,704.47</td><td id=\"0-F\">4400613943</td><td id=\"0-G\">1000657132</td></tr>\n<tr><td id=\"0-H\">SKY KNIGHT</td><td id=\"0-I\">25108</td><td id=\"0-J\">10/10/2025</td><td id=\"0-K\">11,001.09</td><td id=\"0-L\">F105-00015626</td><td id=\"0-M\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-N\">26.79</td><td id=\"0-O\">294,719.20</td><td id=\"0-P\">4400613943</td><td id=\"0-Q\">1000657133</td></tr>\n</table>\n\n<a id='0016082b-bd20-4cb5-a2b4-e1389013a247'></a>\n\n<::attestation: Signature\nSigned\nSignature: illegible\nTISUR\nMaría del Carmen de Rivera Vega\nEjecutiva Comercial\nA black ink signature is centered above a horizontal line, with the text \"TISUR\", \"María del Carmen de Rivera Vega\", and \"Ejecutiva Comercial\" stacked below it.\n::>\n\n<a id='fac8e379-faec-48fa-acfe-5002aa298449'></a>\n\n<::attestation: Signature\nsigned\nSignature: illegible\nAlex Rivera Alvarez\nSupervisor de Op. Portuarias\nMMG LAS BAMBAS\nA blue, illegible signature is placed above a horizontal line, with the name and title printed below the line, centered on a white background.::>",
+    "raw_response": {
+      "markdown": "<a id='2ecfbdec-791b-42bd-a4ed-dac6b8bbdbfb'></a>\n\n<::logo: TISUR\nTISUR\nA green circle with white horizontal lines forming a stylized 'T' or wave, next to the bold green text \"TISUR\".::>\n\n<a id='352ad748-c56a-40d4-af87-66ceda8b90bf'></a>\n\n<::logo: LAS BAMBAS\nLAS BAMBAS\nThe logo features three arch-like shapes in red, orange, and green, sitting on a blue curved line::>\n\n<a id='43070529-f034-46eb-ab6b-f9593d056b15'></a>\n\n<table id=\"0-1\">\n<tr><td id=\"0-2\" colspan=\"10\">Liquidacion Naves - Las Bambas 2025</td></tr>\n<tr><td id=\"0-3\">Nombre de la Nave</td><td id=\"0-4\">Lote</td><td id=\"0-5\">Fecha</td><td id=\"0-6\">Tonelaje</td><td id=\"0-7\">Factura</td><td id=\"0-8\">Servicio</td><td id=\"0-9\">Tarifa</td><td id=\"0-a\">Monto US$ sin IGV</td><td id=\"0-b\">PO</td><td id=\"0-c\">SES</td></tr>\n<tr><td id=\"0-d\">SKY KNIGHT</td><td id=\"0-e\">25105</td><td id=\"0-f\">10/10/2025</td><td id=\"0-g\">11,002.37</td><td id=\"0-h\">F105-00015623</td><td id=\"0-i\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-j\">26.79</td><td id=\"0-k\">294,753.49</td><td id=\"0-l\">4400613943</td><td id=\"0-m\">1000657130</td></tr>\n<tr><td id=\"0-n\">SKY KNIGHT</td><td id=\"0-o\">25106</td><td id=\"0-p\">10/10/2025</td><td id=\"0-q\">11,001.04</td><td id=\"0-r\">F105-00015624</td><td id=\"0-s\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-t\">26.79</td><td id=\"0-u\">294,717.86</td><td id=\"0-v\">4400613943</td><td id=\"0-w\">1000657131</td></tr>\n<tr><td id=\"0-x\">SKY KNIGHT</td><td id=\"0-y\">25107</td><td id=\"0-z\">10/10/2025</td><td id=\"0-A\">11,000.54</td><td id=\"0-B\">F105-00015625</td><td id=\"0-C\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-D\">26.79</td><td id=\"0-E\">294,704.47</td><td id=\"0-F\">4400613943</td><td id=\"0-G\">1000657132</td></tr>\n<tr><td id=\"0-H\">SKY KNIGHT</td><td id=\"0-I\">25108</td><td id=\"0-J\">10/10/2025</td><td id=\"0-K\">11,001.09</td><td id=\"0-L\">F105-00015626</td><td id=\"0-M\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-N\">26.79</td><td id=\"0-O\">294,719.20</td><td id=\"0-P\">4400613943</td><td id=\"0-Q\">1000657133</td></tr>\n</table>\n\n<a id='0016082b-bd20-4cb5-a2b4-e1389013a247'></a>\n\n<::attestation: Signature\nSigned\nSignature: illegible\nTISUR\nMaría del Carmen de Rivera Vega\nEjecutiva Comercial\nA black ink signature is centered above a horizontal line, with the text \"TISUR\", \"María del Carmen de Rivera Vega\", and \"Ejecutiva Comercial\" stacked below it.\n::>\n\n<a id='fac8e379-faec-48fa-acfe-5002aa298449'></a>\n\n<::attestation: Signature\nsigned\nSignature: illegible\nAlex Rivera Alvarez\nSupervisor de Op. Portuarias\nMMG LAS BAMBAS\nA blue, illegible signature is placed above a horizontal line, with the name and title printed below the line, centered on a white background.::>",
+      "chunks": [
+        {
+          "markdown": "<a id='2ecfbdec-791b-42bd-a4ed-dac6b8bbdbfb'></a>\n\n<::logo: TISUR\nTISUR\nA green circle with white horizontal lines forming a stylized 'T' or wave, next to the bold green text \"TISUR\".::>",
+          "type": "logo",
+          "id": "2ecfbdec-791b-42bd-a4ed-dac6b8bbdbfb",
+          "grounding": {
+            "box": {
+              "left": 0.04154738038778305,
+              "top": 0.21394255757331848,
+              "right": 0.14836055040359497,
+              "bottom": 0.2817593514919281
+            },
+            "page": 0
+          }
+        },
+        {
+          "markdown": "<a id='352ad748-c56a-40d4-af87-66ceda8b90bf'></a>\n\n<::logo: LAS BAMBAS\nLAS BAMBAS\nThe logo features three arch-like shapes in red, orange, and green, sitting on a blue curved line::>",
+          "type": "logo",
+          "id": "352ad748-c56a-40d4-af87-66ceda8b90bf",
+          "grounding": {
+            "box": {
+              "left": 0.8580135107040405,
+              "top": 0.19832798838615417,
+              "right": 0.953777551651001,
+              "bottom": 0.2812812328338623
+            },
+            "page": 0
+          }
+        },
+        {
+          "markdown": "<a id='43070529-f034-46eb-ab6b-f9593d056b15'></a>\n\n<table id=\"0-1\">\n<tr><td id=\"0-2\" colspan=\"10\">Liquidacion Naves - Las Bambas 2025</td></tr>\n<tr><td id=\"0-3\">Nombre de la Nave</td><td id=\"0-4\">Lote</td><td id=\"0-5\">Fecha</td><td id=\"0-6\">Tonelaje</td><td id=\"0-7\">Factura</td><td id=\"0-8\">Servicio</td><td id=\"0-9\">Tarifa</td><td id=\"0-a\">Monto US$ sin IGV</td><td id=\"0-b\">PO</td><td id=\"0-c\">SES</td></tr>\n<tr><td id=\"0-d\">SKY KNIGHT</td><td id=\"0-e\">25105</td><td id=\"0-f\">10/10/2025</td><td id=\"0-g\">11,002.37</td><td id=\"0-h\">F105-00015623</td><td id=\"0-i\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-j\">26.79</td><td id=\"0-k\">294,753.49</td><td id=\"0-l\">4400613943</td><td id=\"0-m\">1000657130</td></tr>\n<tr><td id=\"0-n\">SKY KNIGHT</td><td id=\"0-o\">25106</td><td id=\"0-p\">10/10/2025</td><td id=\"0-q\">11,001.04</td><td id=\"0-r\">F105-00015624</td><td id=\"0-s\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-t\">26.79</td><td id=\"0-u\">294,717.86</td><td id=\"0-v\">4400613943</td><td id=\"0-w\">1000657131</td></tr>\n<tr><td id=\"0-x\">SKY KNIGHT</td><td id=\"0-y\">25107</td><td id=\"0-z\">10/10/2025</td><td id=\"0-A\">11,000.54</td><td id=\"0-B\">F105-00015625</td><td id=\"0-C\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-D\">26.79</td><td id=\"0-E\">294,704.47</td><td id=\"0-F\">4400613943</td><td id=\"0-G\">1000657132</td></tr>\n<tr><td id=\"0-H\">SKY KNIGHT</td><td id=\"0-I\">25108</td><td id=\"0-J\">10/10/2025</td><td id=\"0-K\">11,001.09</td><td id=\"0-L\">F105-00015626</td><td id=\"0-M\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-N\">26.79</td><td id=\"0-O\">294,719.20</td><td id=\"0-P\">4400613943</td><td id=\"0-Q\">1000657133</td></tr>\n</table>",
+          "type": "table",
+          "id": "43070529-f034-46eb-ab6b-f9593d056b15",
+          "grounding": {
+            "box": {
+              "left": 0.033509641885757446,
+              "top": 0.288011372089386,
+              "right": 0.9578648805618286,
+              "bottom": 0.5707038044929504
+            },
+            "page": 0
+          }
+        },
+        {
+          "markdown": "<a id='0016082b-bd20-4cb5-a2b4-e1389013a247'></a>\n\n<::attestation: Signature\nSigned\nSignature: illegible\nTISUR\nMaría del Carmen de Rivera Vega\nEjecutiva Comercial\nA black ink signature is centered above a horizontal line, with the text \"TISUR\", \"María del Carmen de Rivera Vega\", and \"Ejecutiva Comercial\" stacked below it.\n::>",
+          "type": "attestation",
+          "id": "0016082b-bd20-4cb5-a2b4-e1389013a247",
+          "grounding": {
+            "box": {
+              "left": 0.17172180116176605,
+              "top": 0.5998103618621826,
+              "right": 0.30696314573287964,
+              "bottom": 0.7155733108520508
+            },
+            "page": 0
+          }
+        },
+        {
+          "markdown": "<a id='fac8e379-faec-48fa-acfe-5002aa298449'></a>\n\n<::attestation: Signature\nsigned\nSignature: illegible\nAlex Rivera Alvarez\nSupervisor de Op. Portuarias\nMMG LAS BAMBAS\nA blue, illegible signature is placed above a horizontal line, with the name and title printed below the line, centered on a white background.::>",
+          "type": "attestation",
+          "id": "fac8e379-faec-48fa-acfe-5002aa298449",
+          "grounding": {
+            "box": {
+              "left": 0.6805307865142822,
+              "top": 0.5767688751220703,
+              "right": 0.7966709136962891,
+              "bottom": 0.7121127843856812
+            },
+            "page": 0
+          }
+        }
+      ],
+      "splits": [
+        {
+          "class": "full",
+          "identifier": "full",
+          "pages": [
+            0
+          ],
+          "markdown": "<a id='2ecfbdec-791b-42bd-a4ed-dac6b8bbdbfb'></a>\n\n<::logo: TISUR\nTISUR\nA green circle with white horizontal lines forming a stylized 'T' or wave, next to the bold green text \"TISUR\".::>\n\n<a id='352ad748-c56a-40d4-af87-66ceda8b90bf'></a>\n\n<::logo: LAS BAMBAS\nLAS BAMBAS\nThe logo features three arch-like shapes in red, orange, and green, sitting on a blue curved line::>\n\n<a id='43070529-f034-46eb-ab6b-f9593d056b15'></a>\n\n<table id=\"0-1\">\n<tr><td id=\"0-2\" colspan=\"10\">Liquidacion Naves - Las Bambas 2025</td></tr>\n<tr><td id=\"0-3\">Nombre de la Nave</td><td id=\"0-4\">Lote</td><td id=\"0-5\">Fecha</td><td id=\"0-6\">Tonelaje</td><td id=\"0-7\">Factura</td><td id=\"0-8\">Servicio</td><td id=\"0-9\">Tarifa</td><td id=\"0-a\">Monto US$ sin IGV</td><td id=\"0-b\">PO</td><td id=\"0-c\">SES</td></tr>\n<tr><td id=\"0-d\">SKY KNIGHT</td><td id=\"0-e\">25105</td><td id=\"0-f\">10/10/2025</td><td id=\"0-g\">11,002.37</td><td id=\"0-h\">F105-00015623</td><td id=\"0-i\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-j\">26.79</td><td id=\"0-k\">294,753.49</td><td id=\"0-l\">4400613943</td><td id=\"0-m\">1000657130</td></tr>\n<tr><td id=\"0-n\">SKY KNIGHT</td><td id=\"0-o\">25106</td><td id=\"0-p\">10/10/2025</td><td id=\"0-q\">11,001.04</td><td id=\"0-r\">F105-00015624</td><td id=\"0-s\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-t\">26.79</td><td id=\"0-u\">294,717.86</td><td id=\"0-v\">4400613943</td><td id=\"0-w\">1000657131</td></tr>\n<tr><td id=\"0-x\">SKY KNIGHT</td><td id=\"0-y\">25107</td><td id=\"0-z\">10/10/2025</td><td id=\"0-A\">11,000.54</td><td id=\"0-B\">F105-00015625</td><td id=\"0-C\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-D\">26.79</td><td id=\"0-E\">294,704.47</td><td id=\"0-F\">4400613943</td><td id=\"0-G\">1000657132</td></tr>\n<tr><td id=\"0-H\">SKY KNIGHT</td><td id=\"0-I\">25108</td><td id=\"0-J\">10/10/2025</td><td id=\"0-K\">11,001.09</td><td id=\"0-L\">F105-00015626</td><td id=\"0-M\">Servicio Integral de Exportación (Recepción, Almacenamiento y Embarque de Concentrados)</td><td id=\"0-N\">26.79</td><td id=\"0-O\">294,719.20</td><td id=\"0-P\">4400613943</td><td id=\"0-Q\">1000657133</td></tr>\n</table>\n\n<a id='0016082b-bd20-4cb5-a2b4-e1389013a247'></a>\n\n<::attestation: Signature\nSigned\nSignature: illegible\nTISUR\nMaría del Carmen de Rivera Vega\nEjecutiva Comercial\nA black ink signature is centered above a horizontal line, with the text \"TISUR\", \"María del Carmen de Rivera Vega\", and \"Ejecutiva Comercial\" stacked below it.\n::>\n\n<a id='fac8e379-faec-48fa-acfe-5002aa298449'></a>\n\n<::attestation: Signature\nsigned\nSignature: illegible\nAlex Rivera Alvarez\nSupervisor de Op. Portuarias\nMMG LAS BAMBAS\nA blue, illegible signature is placed above a horizontal line, with the name and title printed below the line, centered on a white background.::>",
+          "chunks": [
+            "2ecfbdec-791b-42bd-a4ed-dac6b8bbdbfb",
+            "352ad748-c56a-40d4-af87-66ceda8b90bf",
+            "43070529-f034-46eb-ab6b-f9593d056b15",
+            "0016082b-bd20-4cb5-a2b4-e1389013a247",
+            "fac8e379-faec-48fa-acfe-5002aa298449"
+          ]
+        }
+      ],
+      "grounding": {
+        "2ecfbdec-791b-42bd-a4ed-dac6b8bbdbfb": {
+          "box": {
+            "left": 0.04154738038778305,
+            "top": 0.21394255757331848,
+            "right": 0.14836055040359497,
+            "bottom": 0.2817593514919281
+          },
+          "page": 0,
+          "type": "chunkLogo"
+        },
+        "352ad748-c56a-40d4-af87-66ceda8b90bf": {
+          "box": {
+            "left": 0.8580135107040405,
+            "top": 0.19832798838615417,
+            "right": 0.953777551651001,
+            "bottom": 0.2812812328338623
+          },
+          "page": 0,
+          "type": "chunkLogo"
+        },
+        "43070529-f034-46eb-ab6b-f9593d056b15": {
+          "box": {
+            "left": 0.033509641885757446,
+            "top": 0.288011372089386,
+            "right": 0.9578648805618286,
+            "bottom": 0.5707038044929504
+          },
+          "page": 0,
+          "type": "chunkTable"
+        },
+        "0-1": {
+          "box": {
+            "left": 0.03792094359076682,
+            "top": 0.29341421520053235,
+            "right": 0.9536367687361693,
+            "bottom": 0.5644565961631827
+          },
+          "page": 0,
+          "type": "table"
+        },
+        "0-2": {
+          "box": {
+            "left": 0.037987490912430186,
+            "top": 0.29341421520053235,
+            "right": 0.9536367687361693,
+            "bottom": 0.32623853573141126
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-3": {
+          "box": {
+            "left": 0.037980589511300386,
+            "top": 0.3262333712732833,
+            "right": 0.16397471332933938,
+            "bottom": 0.3509347262489566
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-4": {
+          "box": {
+            "left": 0.16395827293613655,
+            "top": 0.3262340817768197,
+            "right": 0.24908709508227309,
+            "bottom": 0.35093144958011
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-5": {
+          "box": {
+            "left": 0.24905728515799638,
+            "top": 0.326234561754384,
+            "right": 0.3298174063755392,
+            "bottom": 0.3509292361031533
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-6": {
+          "box": {
+            "left": 0.329806121085711,
+            "top": 0.3262350171959758,
+            "right": 0.4111395459035987,
+            "bottom": 0.35092713658860475
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-7": {
+          "box": {
+            "left": 0.4111295818567716,
+            "top": 0.326235475878581,
+            "right": 0.4878220118416514,
+            "bottom": 0.35092502168266265
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-8": {
+          "box": {
+            "left": 0.48781956748061195,
+            "top": 0.3262359084273444,
+            "right": 0.7018098279191309,
+            "bottom": 0.35092302743848997
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-9": {
+          "box": {
+            "left": 0.7018015884123888,
+            "top": 0.3262371153340585,
+            "right": 0.7439254730733855,
+            "bottom": 0.350917462359824
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-a": {
+          "box": {
+            "left": 0.7439167924123603,
+            "top": 0.3262373528732791,
+            "right": 0.8192881173795821,
+            "bottom": 0.35091636707840734
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-b": {
+          "box": {
+            "left": 0.81927769146773,
+            "top": 0.3262377779256954,
+            "right": 0.885809579961255,
+            "bottom": 0.3509144071582038
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-c": {
+          "box": {
+            "left": 0.8857968420712995,
+            "top": 0.32623815310866233,
+            "right": 0.9536350503718071,
+            "bottom": 0.35091267716637986
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-d": {
+          "box": {
+            "left": 0.03796570260312037,
+            "top": 0.35093144958011,
+            "right": 0.1640101817558594,
+            "bottom": 0.40421764612697764
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-e": {
+          "box": {
+            "left": 0.16397471332933938,
+            "top": 0.3509292361031533,
+            "right": 0.2491514131238049,
+            "bottom": 0.40421343404115806
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-f": {
+          "box": {
+            "left": 0.24908709508227309,
+            "top": 0.35092713658860475,
+            "right": 0.32984175781988934,
+            "bottom": 0.4042105888378162
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-g": {
+          "box": {
+            "left": 0.3298174063755392,
+            "top": 0.35092502168266265,
+            "right": 0.4111610483624004,
+            "bottom": 0.4042078923717833
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-h": {
+          "box": {
+            "left": 0.4111395459035987,
+            "top": 0.35092302743848997,
+            "right": 0.48782728724632063,
+            "bottom": 0.4042051748879803
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-i": {
+          "box": {
+            "left": 0.4878220118416514,
+            "top": 0.350917462359824,
+            "right": 0.7018276147206327,
+            "bottom": 0.4042026128973258
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-j": {
+          "box": {
+            "left": 0.7018098279191309,
+            "top": 0.35091636707840734,
+            "right": 0.7439442131064187,
+            "bottom": 0.40419546155082653
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-k": {
+          "box": {
+            "left": 0.7439254730733855,
+            "top": 0.3509144071582038,
+            "right": 0.8193106270440625,
+            "bottom": 0.4041940541212586
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-l": {
+          "box": {
+            "left": 0.8192881173795821,
+            "top": 0.35091267716637986,
+            "right": 0.8858370833050078,
+            "bottom": 0.40419153556744686
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-m": {
+          "box": {
+            "left": 0.885809579961255,
+            "top": 0.35091091329550783,
+            "right": 0.9536337561158932,
+            "bottom": 0.40418931242253064
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-n": {
+          "box": {
+            "left": 0.03795081823711006,
+            "top": 0.40421343404115806,
+            "right": 0.16404564493089574,
+            "bottom": 0.45749146712272976
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-o": {
+          "box": {
+            "left": 0.1640101817558594,
+            "top": 0.4042105888378162,
+            "right": 0.24921572262884195,
+            "bottom": 0.4574875295288281
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-p": {
+          "box": {
+            "left": 0.2491514131238049,
+            "top": 0.4042078923717833,
+            "right": 0.3298661063863756,
+            "bottom": 0.4574848699020429
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-q": {
+          "box": {
+            "left": 0.32984175781988934,
+            "top": 0.4042051748879803,
+            "right": 0.41118254859510334,
+            "bottom": 0.45748235141284255
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-r": {
+          "box": {
+            "left": 0.4111610483624004,
+            "top": 0.4042026128973258,
+            "right": 0.4878325621777244,
+            "bottom": 0.4574798121244725
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-s": {
+          "box": {
+            "left": 0.48782728724632063,
+            "top": 0.40419546155082653,
+            "right": 0.7018454006123237,
+            "bottom": 0.45747741855580704
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-t": {
+          "box": {
+            "left": 0.7018276147206327,
+            "top": 0.4041940541212586,
+            "right": 0.7439629523231084,
+            "bottom": 0.45747073552471373
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-u": {
+          "box": {
+            "left": 0.7439442131064187,
+            "top": 0.40419153556744686,
+            "right": 0.8193331360336938,
+            "bottom": 0.457469420309656
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-v": {
+          "box": {
+            "left": 0.8193106270440625,
+            "top": 0.40418931242253064,
+            "right": 0.8858645861539137,
+            "bottom": 0.4574670667065501
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-w": {
+          "box": {
+            "left": 0.8858370833050078,
+            "top": 0.40418704692360213,
+            "right": 0.9536309613730338,
+            "bottom": 0.4574649891127333
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-x": {
+          "box": {
+            "left": 0.03793595231595334,
+            "top": 0.4574875295288281,
+            "right": 0.164081060467013,
+            "bottom": 0.510699270672527
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-y": {
+          "box": {
+            "left": 0.16404564493089574,
+            "top": 0.4574848699020429,
+            "right": 0.24927994122203606,
+            "bottom": 0.5106900600672426
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-z": {
+          "box": {
+            "left": 0.24921572262884195,
+            "top": 0.45748235141284255,
+            "right": 0.32989041891199455,
+            "bottom": 0.510683839189772
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-A": {
+          "box": {
+            "left": 0.3298661063863756,
+            "top": 0.4574798121244725,
+            "right": 0.411204015559945,
+            "bottom": 0.5106779533389241
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-B": {
+          "box": {
+            "left": 0.41118254859510334,
+            "top": 0.45747741855580704,
+            "right": 0.48783782861340735,
+            "bottom": 0.5106720161491751
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-C": {
+          "box": {
+            "left": 0.4878325621777244,
+            "top": 0.45747073552471373,
+            "right": 0.7018631547162231,
+            "bottom": 0.5106664206582852
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-D": {
+          "box": {
+            "left": 0.7018454006123237,
+            "top": 0.457469420309656,
+            "right": 0.7439816573966961,
+            "bottom": 0.5106507933951397
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-E": {
+          "box": {
+            "left": 0.7439629523231084,
+            "top": 0.4574670667065501,
+            "right": 0.8193556026112455,
+            "bottom": 0.5106477180725287
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-F": {
+          "box": {
+            "left": 0.8193331360336938,
+            "top": 0.4574649891127333,
+            "right": 0.8858920356707097,
+            "bottom": 0.5106422145720897
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-G": {
+          "box": {
+            "left": 0.8858645861539137,
+            "top": 0.45746287304288097,
+            "right": 0.9536281666463055,
+            "bottom": 0.5106373563510225
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-H": {
+          "box": {
+            "left": 0.03792094359076682,
+            "top": 0.5106900600672426,
+            "right": 0.16411682940742545,
+            "bottom": 0.564423487631765
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-I": {
+          "box": {
+            "left": 0.164081060467013,
+            "top": 0.510683839189772,
+            "right": 0.24934481680499687,
+            "bottom": 0.5644270617331432
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-J": {
+          "box": {
+            "left": 0.24927994122203606,
+            "top": 0.5106779533389241,
+            "right": 0.3299149859565245,
+            "bottom": 0.5644304405053213
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-K": {
+          "box": {
+            "left": 0.32989041891199455,
+            "top": 0.5106720161491751,
+            "right": 0.41122571241243344,
+            "bottom": 0.564433850333341
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-L": {
+          "box": {
+            "left": 0.411204015559945,
+            "top": 0.5106664206582852,
+            "right": 0.48784315263943046,
+            "bottom": 0.5644370633447833
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-M": {
+          "box": {
+            "left": 0.48783782861340735,
+            "top": 0.5106507933951397,
+            "right": 0.7018811141999359,
+            "bottom": 0.5644460391917647
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-N": {
+          "box": {
+            "left": 0.7018631547162231,
+            "top": 0.5106477180725287,
+            "right": 0.7440005811802087,
+            "bottom": 0.5644478055040946
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-O": {
+          "box": {
+            "left": 0.7439816573966961,
+            "top": 0.5106422145720897,
+            "right": 0.8193783368874501,
+            "bottom": 0.5644509665284105
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-P": {
+          "box": {
+            "left": 0.8193556026112455,
+            "top": 0.5106373563510225,
+            "right": 0.8859198176610583,
+            "bottom": 0.5644537569967227
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0-Q": {
+          "box": {
+            "left": 0.8858920356707097,
+            "top": 0.5106324107365212,
+            "right": 0.9536253774952226,
+            "bottom": 0.5644565961631827
+          },
+          "page": 0,
+          "type": "tableCell"
+        },
+        "0016082b-bd20-4cb5-a2b4-e1389013a247": {
+          "box": {
+            "left": 0.17172180116176605,
+            "top": 0.5998103618621826,
+            "right": 0.30696314573287964,
+            "bottom": 0.7155733108520508
+          },
+          "page": 0,
+          "type": "chunkAttestation"
+        },
+        "fac8e379-faec-48fa-acfe-5002aa298449": {
+          "box": {
+            "left": 0.6805307865142822,
+            "top": 0.5767688751220703,
+            "right": 0.7966709136962891,
+            "bottom": 0.7121127843856812
+          },
+          "page": 0,
+          "type": "chunkAttestation"
+        }
+      },
+      "metadata": {
+        "filename": "25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf",
+        "org_id": null,
+        "page_count": 1,
+        "duration_ms": 5206,
+        "credit_usage": 3.0,
+        "job_id": "qra24zns4bxuolw9jw94ongri",
+        "version": "dpt-2-20250919",
+        "failed_pages": []
+      }
+    }
+  }
+]

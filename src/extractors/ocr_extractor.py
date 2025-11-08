@@ -1,241 +1,193 @@
 """
-ocr_extractor.py - PASO 3 de la Pipeline de Indexación
+ocr_extractor.py - PASO 3 de la Pipeline de Indexación (CORREGIDO)
 
-Este módulo se encarga de tomar las imágenes generadas en el PASO 2
-(tanto de Excel como de PDF) y usar un servicio de OCR (Reconocimiento
-Óptico de Caracteres) para extraer todo el texto en bruto.
+Este módulo ahora usa el endpoint 'Agentic Document Extraction' (ADE)
+de Landing AI (v1/ade/parse), que es más moderno y potente.
 
-El resultado de este paso es un archivo JSON (`_text.json`) por cada
-imagen, que contiene el texto crudo. Este archivo será el "input"
-para el `structure_parser` (PASO 4).
+1. Acepta PDFs originales (mucho mejor) y también imágenes PNG.
+2. Devuelve Markdown estructurado, no solo texto crudo.
 """
 
 # --- Importaciones ---
-import json     # Para crear el archivo JSON de salida
-import base64   # Para codificar imágenes y enviarlas en una solicitud API
-import re       # Para expresiones regulares (usado en el parser)
-import requests # Para hacer llamadas a las APIs de OCR (Landing AI, DeepSeek)
-from pathlib import Path # Para manejar rutas de archivos
-from typing import List, Dict, Any # Para type hints
+import json
+import requests  # Se añade 'requests' para llamadas API directas
+from pathlib import Path
+from typing import List, Dict, Any
 
 # Importaciones de nuestro propio proyecto
 from src.utils.logger import get_logger
 from src.utils.config import (
-    LANDING_AI_API_KEY,  # Clave API para Landing AI
-    DEEPSEEK_API_KEY,    # Clave API para DeepSeek
-    OCR_PROVIDER,        # Cuál de los dos proveedores usar (definido en .env)
-    EXTRACTED_TEXT_DIR,  # Dónde guardar los archivos _text.json
-    EXCEL_IMAGES_DIR,    # De dónde leer las imágenes de Excel
-    PDF_IMAGES_DIR       # De dónde leer las imágenes de PDF
+    LANDING_AI_API_KEY,
+    OCR_PROVIDER,
+    EXTRACTED_TEXT_DIR,
+    EXCEL_IMAGES_DIR,   # De dónde leer las imágenes de Excel
+    INPUT_PDF_DIR       # ¡NUEVO! Leemos los PDF originales
 )
 
 # Configuración del logger para este archivo
 logger = get_logger(__name__)
 
+# Definir el endpoint moderno de Landing AI
+ADE_API_URL = "https://api.va.landing.ai/v1/ade/parse"
 
-# --- 1. La Clase Principal del Extractor OCR ---
+
+# --- 1. La Clase Principal del Extractor OCR (Modificada) ---
 
 class OCRExtractor:
     """
-    Esta clase actúa como un "cliente" para los servicios de OCR.
-    Su única responsabilidad es tomar la ruta de una imagen y devolver el texto.
+    Cliente para el servicio de extracción de documentos (ADE).
+    Maneja tanto PDF como imágenes.
     """
-    
+
     def __init__(self, provider: str = OCR_PROVIDER):
         """
         Inicializa el extractor de OCR.
         
         Args:
             provider (str): El nombre del servicio a usar ('landing_ai' o 'deepseek').
-                            Esto se carga desde el archivo .env a través de config.py.
         """
         self.provider = provider
         logger.info(f"Extractor OCR iniciado con el proveedor: {provider}")
-        
-        # Validar que las API keys necesarias estén presentes
+
         if provider == 'landing_ai' and not LANDING_AI_API_KEY:
             logger.error("Falta LANDING_AI_API_KEY en el archivo .env")
-        elif provider == 'deepseek' and not DEEPSEEK_API_KEY:
-            logger.error("Falta DEEPSEEK_API_KEY en el archivo .env")
+        # (Se podría añadir la lógica de DeepSeek aquí si se desea)
 
-    def extract_text(self, image_path: str) -> dict:
+    def extract_text(self, document_path: str) -> dict:
         """
-        Extrae texto de una imagen usando el proveedor seleccionado.
-        Esta es la función pública principal de la clase.
+        Extrae texto/markdown de un documento (PDF o PNG).
+        Actúa como un enrutador (router) que llama al método correcto.
         
         Args:
-            image_path (str): La ruta completa al archivo de imagen (ej. ".../imagen.png")
+            document_path (str): Ruta completa al archivo (PDF o PNG).
         
         Returns:
-            dict: Un diccionario con el estado ("success" o "error") y el texto extraído.
+            dict: Diccionario con estado y texto (markdown).
         """
         try:
-            logger.info(f"Extrayendo texto de: {Path(image_path).name}")
-            
-            # Selecciona el método privado correcto basado en el proveedor
+            path_obj = Path(document_path)
+            file_name = path_obj.name
+            logger.info(f"Extrayendo contenido de: {file_name}")
+
             if self.provider == "landing_ai":
-                return self._extract_landing_ai(image_path)
-            elif self.provider == "deepseek":
-                return self._extract_deepseek(image_path)
+                # Enrutar basado en la extensión del archivo
+                if path_obj.suffix.lower() == ".pdf":
+                    return self._extract_ade_pdf(document_path)
+                elif path_obj.suffix.lower() == ".png":
+                    return self._extract_ade_image(document_path)
+                else:
+                    logger.warning(f"Tipo de archivo no soportado: {file_name}")
+                    return {"status": "error", "message": "Tipo de archivo no soportado"}
+            
+            # (Aquí iría la lógica para 'deepseek' si se implementa)
             else:
                 logger.error(f"Proveedor de OCR no soportado: {self.provider}")
                 return {"status": "error", "message": f"Proveedor no soportado: {self.provider}"}
         
         except Exception as e:
-            logger.error(f"Error al extraer texto de {image_path}: {e}", exc_info=True)
+            logger.error(f"Error al extraer texto de {document_path}: {e}", exc_info=True)
             return {"status": "error", "message": str(e)}
-    
-    def _extract_landing_ai(self, image_path: str) -> dict:
+
+    def _extract_ade_pdf(self, pdf_path: str) -> dict:
         """
-        Lógica específica para llamar a la API de Landing AI.
+        Lógica para llamar al endpoint ADE enviando un archivo PDF.
         """
+        headers = {"Authorization": f"Bearer {LANDING_AI_API_KEY}"}
+        path_obj = Path(pdf_path)
+
         try:
-            # 1. Leer la imagen y codificarla en base64
-            # Las APIs no aceptan archivos; aceptan el "texto" de la imagen (base64)
-            with open(image_path, "rb") as f:
-                image_data = base64.b64encode(f.read()).decode("utf-8")
-            
-            # 2. Configurar los Headers de la solicitud (Autenticación)
-            headers = {
-                "Authorization": f"Bearer {LANDING_AI_API_KEY}",
-                "Content-Type": "application/json"
-            }
-            
-            # 3. Configurar el Payload (el cuerpo de la solicitud)
-            # Le decimos a la API que le estamos enviando una imagen PNG en base64
-            payload = {
-                "image": f"data:image/png;base64,{image_data}"
-            }
-            
-            # 4. Definir el Endpoint de la API
-            url = "https://api.landing.ai/v1/document_understanding"
-            
-            # 5. Hacer la llamada a la API
-            response = requests.post(url, json=payload, headers=headers, timeout=30)
-            response.raise_for_status() # Lanza un error si la respuesta no es 2xx
-            
-            result = response.json()
-            
-            logger.info(f"Landing AI OCR completado para: {Path(image_path).name}")
-            
-            # 6. Devolver la respuesta en un formato estándar
-            return {
-                "status": "success",
-                "provider": "landing_ai",
-                "text": result.get("text", ""), # El texto extraído
-                "raw_response": result # La respuesta completa de la API
-            }
-        
-        except Exception as e:
-            logger.error(f"Error con la API de Landing AI: {e}", exc_info=True)
-            return {"status": "error", "message": str(e)}
-    
-    def _extract_deepseek(self, image_path: str) -> dict:
+            with open(pdf_path, 'rb') as f_pdf:
+                files_payload = {
+                    'document': (path_obj.name, f_pdf, 'application/pdf'),
+                    'model': (None, 'dpt-2-latest'),
+                }
+                
+                response = requests.post(ADE_API_URL, headers=headers, files=files_payload, timeout=120) # Timeout más largo para PDFs
+                response.raise_for_status() # Lanza error si no es 2xx
+
+                logger.info(f"ADE (PDF) completado para: {path_obj.name}")
+                return {
+                    "status": "success",
+                    "provider": "landing_ai_ade_pdf",
+                    "source_file": path_obj.name,
+                    "text": response.json().get('markdown', ''), # ¡Obtenemos Markdown!
+                    "raw_response": response.json()
+                }
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error de API (PDF) para {path_obj.name}: {e}", exc_info=True)
+            return {"status": "error", "message": str(e), "source_file": path_obj.name}
+
+    def _extract_ade_image(self, image_path: str) -> dict:
         """
-        Lógica específica para llamar a la API de DeepSeek (que es multimodal).
+        Lógica para llamar al endpoint ADE enviando un archivo de IMAGEN (PNG).
         """
+        headers = {"Authorization": f"Bearer {LANDING_AI_API_KEY}"}
+        path_obj = Path(image_path)
+
         try:
-            # 1. Leer y codificar la imagen en base64
-            with open(image_path, "rb") as f:
-                image_data = base64.b64encode(f.read()).decode("utf-8")
-            
-            # 2. Configurar Headers (Autenticación)
-            headers = {
-                "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
-                "Content-Type": "application/json"
-            }
-            
-            # 3. Configurar el Payload
-            # DeepSeek usa un formato de "chat" (mensajes)
-            payload = {
-                "model": "deepseek-vision", # El modelo multimodal
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                # Parte 1: La imagen
-                                "type": "image_url",
-                                "image_url": {"url": f"data:image/png;base64,{image_data}"}
-                            },
-                            {
-                                # Parte 2: El prompt (la instrucción)
-                                "type": "text",
-                                "text": "Extrae todo el texto visible en esta imagen. Mantén la estructura y formato."
-                            }
-                        ]
-                    }
-                ]
-            }
-            
-            # 4. Definir el Endpoint
-            url = "https://api.deepseek.com/v1/chat/completions"
-            
-            # 5. Hacer la llamada a la API
-            response = requests.post(url, json=payload, headers=headers, timeout=30)
-            response.raise_for_status()
-            
-            result = response.json()
-            
-            # 6. Extraer el texto de la respuesta del chat
-            text = result["choices"][0]["message"]["content"]
-            
-            logger.info(f"DeepSeek OCR completado para: {Path(image_path).name}")
-            
-            # 7. Devolver en formato estándar
-            return {
-                "status": "success",
-                "provider": "deepseek",
-                "text": text,
-                "raw_response": result
-            }
-        
-        except Exception as e:
-            logger.error(f"Error con la API de DeepSeek: {e}", exc_info=True)
-            return {"status": "error", "message": str(e)}
+            with open(image_path, 'rb') as f_img:
+                files_payload = {
+                    'document': (path_obj.name, f_img, 'image/png'), # MIME type es image/png
+                    'model': (None, 'dpt-2-latest'),
+                }
+                
+                response = requests.post(ADE_API_URL, headers=headers, files=files_payload, timeout=60)
+                response.raise_for_status()
 
-    # NOTA: Los métodos 'extract_structure', '_detect_tables' y '_extract_key_fields'
-    # han sido eliminados.
-    # Esa lógica ahora es responsabilidad exclusiva de 'structure_parser.py',
-    # que es mucho más potente por usar un LLM.
+                logger.info(f"ADE (Imagen) completado para: {path_obj.name}")
+                return {
+                    "status": "success",
+                    "provider": "landing_ai_ade_image",
+                    "source_file": path_obj.name,
+                    "text": response.json().get('markdown', ''), # ¡También Markdown!
+                    "raw_response": response.json()
+                }
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error de API (Imagen) para {path_obj.name}: {e}", exc_info=True)
+            return {"status": "error", "message": str(e), "source_file": path_obj.name}
 
 
-# --- 2. Función de Orquestación (La que llama main.py) ---
+# --- 2. Función de Orquestación (Modificada) ---
 
-def process_all_images() -> List[Dict[str, Any]]:
+def process_all_documents() -> List[Dict[str, Any]]: # RENOMBRADA
     """
-    Esta es la función "orquestadora" para el PASO 3.
+    Esta es la función "orquestadora" para el PASO 3 (CORREGIDA).
     
     1. Crea una instancia del `OCRExtractor`.
-    2. Busca todas las imágenes PNG en las carpetas de salida del PASO 2.
-    3. Itera sobre cada imagen y llama a `extractor.extract_text()`.
-    4. Guarda el resultado (el texto crudo) en un nuevo archivo JSON
-       en la carpeta `EXTRACTED_TEXT_DIR`.
-       
-    Estos archivos JSON son el "producto" de este módulo y el "insumo"
-    para el `structure_parser`.
+    2. Busca los PDFs originales en `INPUT_PDF_DIR`.
+    3. Busca las imágenes PNG de Excel en `EXCEL_IMAGES_DIR`.
+    4. Itera sobre todos y llama a `extractor.extract_text()`.
+    5. Guarda el resultado (el Markdown) en `EXTRACTED_TEXT_DIR`.
     """
-    logger.info("Iniciando PASO 3: Extracción OCR de todas las imágenes...")
+    logger.info("Iniciando PASO 3: Extracción de Markdown (ADE) de todos los documentos...")
     
-    extractor = OCRExtractor() # Usa el provider definido en .env
+    extractor = OCRExtractor()
     results = []
     
-    # 1. Unir las listas de imágenes de Excel y PDF
-    excel_images = list(EXCEL_IMAGES_DIR.glob("*.png"))
-    pdf_images = list(PDF_IMAGES_DIR.glob("*.png"))
-    all_images = excel_images + pdf_images
+    # 1. Obtener los PDFs originales
+    pdf_files = list(INPUT_PDF_DIR.glob("*.pdf"))
+    logger.info(f"Se encontraron {len(pdf_files)} PDFs originales para procesar.")
+
+    # 2. Obtener las imágenes de Excel (generadas en el Paso 1)
+    excel_png_files = list(EXCEL_IMAGES_DIR.glob("*.png"))
+    logger.info(f"Se encontraron {len(excel_png_files)} imágenes de Excel para procesar.")
+
+    # 3. Unir ambas listas
+    all_document_paths = [Path(p) for p in pdf_files + excel_png_files]
     
-    logger.info(f"Se encontraron {len(all_images)} imágenes totales para procesar.")
+    logger.info(f"Se procesarán {len(all_document_paths)} documentos en total.")
     
-    # 2. Iterar y procesar cada imagen
-    for image_path in all_images:
-        # 3. Llamar al extractor (Landing AI o DeepSeek)
-        result = extractor.extract_text(str(image_path))
+    # 4. Iterar y procesar cada documento
+    for doc_path in all_document_paths:
+        
+        # 5. Llamar al extractor (que enrutará a PDF o Imagen)
+        result = extractor.extract_text(str(doc_path))
         
         if result["status"] == "success":
-            # 4. Guardar el texto extraído en EXTRACTED_TEXT_DIR
-            # El nombre del archivo será, ej: "mi_imagen_page_1_text.json"
-            text_file_name = f"{image_path.stem}_text.json"
+            # 6. Guardar el markdown extraído en EXTRACTED_TEXT_DIR
+            text_file_name = f"{doc_path.stem}_text.json"
             text_file_path = EXTRACTED_TEXT_DIR / text_file_name
             
             try:
@@ -243,7 +195,7 @@ def process_all_images() -> List[Dict[str, Any]]:
                 with open(text_file_path, 'w', encoding='utf-8') as f:
                     json.dump(result, f, ensure_ascii=False, indent=2)
                 
-                logger.info(f"Texto guardado en: {text_file_name}")
+                logger.info(f"Markdown guardado en: {text_file_name}")
                 result["output_file"] = text_file_name
                 
             except Exception as e:
@@ -253,5 +205,5 @@ def process_all_images() -> List[Dict[str, Any]]:
         
         results.append(result)
     
-    logger.info(f"Extracción OCR completada. {len(results)} archivos procesados.")
+    logger.info(f"Extracción de Markdown completada. {len(results)} archivos procesados.")
     return results
