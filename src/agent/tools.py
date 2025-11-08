@@ -56,7 +56,7 @@ class AgentTools:
     para que las herramientas puedan usarlas.
     """
 
-    def __init__(self, indexer: MultimodalIndexer, llm: BaseChatModel):
+    def __init__(self, indexer: 'MultimodalIndexer', llm: BaseChatModel):
         """
         Inicializa el kit de herramientas.
         

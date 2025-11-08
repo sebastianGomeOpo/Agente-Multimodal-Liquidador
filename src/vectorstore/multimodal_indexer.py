@@ -4,9 +4,18 @@ from PIL import Image
 import numpy as np
 
 # Importaciones de módulos del proyecto
-# Asumimos que estos módulos existen en las rutas correctas
 from .chroma_manager import ChromaManager
 from ..embeddings.clip_encoder import ClipEncoder # Dependencia clave
+
+# --- ¡NUEVAS IMPORTACIONES! ---
+# Importar configs para instanciación por defecto
+from ..utils.config import (
+    CHROMA_PERSIST_DIR,
+    CHROMA_COLLECTION_NAME,
+    CHROMA_DISTANCE_METRIC,
+    CLIP_MODEL_NAME
+)
+# --- FIN DE NUEVAS IMPORTACIONES ---
 
 # Configuración del logger para este módulo
 logger = logging.getLogger(__name__)
@@ -19,18 +28,44 @@ class MultimodalIndexer:
     Esta clase es el puente entre el codificador (CLIP) y la base de datos (ChromaDB).
     """
     
-    def __init__(self, chroma_manager: ChromaManager, clip_encoder: ClipEncoder):
+    # --- ¡CONSTRUCTOR MODIFICADO! ---
+    def __init__(self, chroma_manager: Optional[ChromaManager] = None, clip_encoder: Optional[ClipEncoder] = None):
         """
         Inicializa el indexador.
         
+        Si no se proveen chroma_manager o clip_encoder, se crearán
+        instancias por defecto usando la configuración del proyecto.
+        
         Args:
-            chroma_manager (ChromaManager): Instancia del gestor de ChromaDB ya inicializado.
-            clip_encoder (ClipEncoder): Instancia del codificador CLIP ya cargado.
+            chroma_manager (Optional[ChromaManager]): Instancia del gestor de ChromaDB.
+            clip_encoder (Optional[ClipEncoder]): Instancia del codificador CLIP.
         """
-        self.manager = chroma_manager
+        if clip_encoder:
+            self.encoder = clip_encoder
+            logger.info("MultimodalIndexer inicializado con ClipEncoder provisto.")
+        else:
+            logger.info("No se proveyó ClipEncoder, creando instancia por defecto...")
+            # Asumimos que ClipEncoder puede ser instanciado sin argumentos
+            # o que usa CLIP_MODEL_NAME por defecto desde config.
+            self.encoder = ClipEncoder() 
+            logger.info("Instancia de ClipEncoder por defecto creada.")
+        
+        if chroma_manager:
+            self.manager = chroma_manager
+            logger.info("MultimodalIndexer inicializado con ChromaManager provisto.")
+        else:
+            logger.info("No se proveyó ChromaManager, creando instancia por defecto...")
+            # Usamos str() en el Path por si ChromaDB lo requiere
+            self.manager = ChromaManager(
+                persist_directory=str(CHROMA_PERSIST_DIR),
+                collection_name=CHROMA_COLLECTION_NAME,
+                distance_metric=CHROMA_DISTANCE_METRIC
+            )
+            logger.info("Instancia de ChromaManager por defecto creada.")
+
         self.collection = self.manager.get_collection()
-        self.encoder = clip_encoder
         logger.info("MultimodalIndexer inicializado y listo.")
+    # --- FIN DE CONSTRUCTOR MODIFICADO ---
 
     def _generate_unique_id(self, metadata: Dict[str, Any]) -> str:
         """
