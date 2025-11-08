@@ -21,3 +21,15 @@
 2025-11-07 21:44:29,710 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
 2025-11-07 21:44:29,915 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
 2025-11-07 21:44:29,917 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 22:19:01,909 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-07 22:19:01,912 - src.extractors.ocr_extractor - ERROR - Falta LANDING_AI_API_KEY en el archivo .env
+2025-11-07 22:27:33,766 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-07 22:27:33,768 - src.extractors.ocr_extractor - ERROR - Falta LANDING_AI_API_KEY en el archivo .env
+2025-11-07 22:27:58,538 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-07 22:27:58,541 - src.extractors.ocr_extractor - ERROR - Falta LANDING_AI_API_KEY en el archivo .env
+2025-11-07 22:31:30,359 - src.preprocessors.excel_to_image - INFO - Iniciando conversión de Excel: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\excel\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).xlsx
+2025-11-07 22:31:31,068 - src.preprocessors.excel_to_image - INFO - Usando rango: A1:Z100
+2025-11-07 22:31:31,074 - src.preprocessors.excel_to_image - INFO - Excel procesado: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)
+2025-11-07 22:35:37,339 - src.preprocessors.excel_to_image - INFO - Iniciando conversión de Excel: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\excel\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).xlsx
+2025-11-07 22:35:38,014 - src.preprocessors.excel_to_image - INFO - Usando rango: A1:Z100
+2025-11-07 22:35:38,020 - src.preprocessors.excel_to_image - INFO - Excel procesado: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)

@@ -1,0 +1,25 @@
+
+*.env
+!.env.example
+# Ignore environment variable files
+# These files may contain sensitive information such as API keys and passwords.
+# Do not commit them to version control.
+.vscode/
+# Ignore VSCode workspace settings
+# These settings are user-specific and should not be shared.
+__pycache__/
+*.pyc
+# Ignore Python cache files
+.ipynb_checkpoints/
+# Ignore Jupyter Notebook checkpoints
+logs/
+*.log
+# Ignore log files
+data/
+# Ignore data files
+outputs/
+# Ignore output files
+models/
+# Ignore machine learning models
+temp/
+# Ignore temporary files}
