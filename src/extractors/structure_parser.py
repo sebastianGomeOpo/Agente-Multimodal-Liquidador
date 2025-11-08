@@ -5,7 +5,7 @@ from typing import List, Dict, Any, Optional, Type
 from pydantic import BaseModel, Field, ValidationError
 
 # Dependencia de LangChain para el LLM
-from langchain_core.chat_models import BaseChatModel
+from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
 

@@ -7,7 +7,7 @@ from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 
 # Importaciones de LangChain para el LLM y Pydantic
-from langchain_core.chat_models import BaseChatModel
+from langchain_core.language_models.chat_models import BaseChatModel
 
 # Importación clave del proyecto
 # Asumimos que el MultimodalIndexer está disponible en esta ruta

@@ -1,0 +1,23 @@
+2025-11-07 21:39:37,962 - src.preprocessors.excel_to_image - INFO - Iniciando conversión de Excel: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\excel\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1).xlsx
+2025-11-07 21:39:38,672 - src.preprocessors.excel_to_image - INFO - Usando rango: A1:Z100
+2025-11-07 21:39:38,678 - src.preprocessors.excel_to_image - INFO - Excel procesado: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)
+2025-11-07 21:43:58,103 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 21:43:59,910 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 21:43:59,982 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 21:43:59,983 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 21:44:24,549 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 21:44:25,789 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 21:44:25,818 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 21:44:25,820 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 21:44:25,822 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 21:44:26,963 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 21:44:27,019 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 21:44:27,021 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 21:44:27,024 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 21:44:28,221 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 21:44:28,317 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 21:44:28,318 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
+2025-11-07 21:44:28,321 - src.preprocessors.pdf_to_image - INFO - Iniciando conversión de PDF: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\input\pdf\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-07 21:44:29,710 - src.preprocessors.pdf_to_image - INFO - PDF convertido: 1 páginas
+2025-11-07 21:44:29,915 - src.preprocessors.pdf_to_image - INFO - Página 1 guardada: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-07 21:44:29,917 - src.preprocessors.pdf_to_image - INFO - Metadata guardada: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\pdf_images\25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_metadata.json
