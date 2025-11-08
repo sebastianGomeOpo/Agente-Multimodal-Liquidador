@@ -23,3 +23,14 @@ models/
 # Ignore machine learning models
 temp/
 # Ignore temporary files}
+
+__pycache__
+*.pyc
+.ipynb_checkpoints
+logs
+*.log
+data
+outputs
+json_files
+models
+temp

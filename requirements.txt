@@ -30,3 +30,4 @@ matplotlib
 seaborn
 scikit-learn
 
+requests>=2.31.0

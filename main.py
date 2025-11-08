@@ -1,21 +1,15 @@
 """
-main.py - Punto de entrada principal del MultiDoc-Agent (CORREGIDO)
+main.py - Punto de entrada principal del MultiDoc-Agent (REFACTORIZADO)
 """
 
 import sys
 from pathlib import Path
-import json  # Necesario para cargar los embeddings desde archivos JSON
 
 from src.utils.logger import get_logger
 from src.preprocessors import process_all_excels
-
-# --- IMPORTACIÓN CORREGIDA ---
-# Importamos 'process_all_documents' en lugar de 'process_all_images'
 from src.extractors import process_all_documents, process_all_extracted_text
-# -------------------------------
-
 from src.embeddings import process_all_multimodal
-from src.vectorstore import MultimodalIndexer
+from src.vectorstore import index_all_embeddings, MultimodalIndexer
 from src.agent import run_agent_query
 
 logger = get_logger(__name__)
@@ -23,128 +17,60 @@ logger = get_logger(__name__)
 
 def indexing_mode():
     """
-    MODO 1: Indexación (poblar ChromaDB)
-    
-    Pipeline completo (Corregido):
-    1. Excel → Imágenes PNG (Solo Excel)
-    2. (PDFs se procesan directamente)
-    3. PDF/PNG → API ADE → Markdown
-    4. Markdown → LLM → JSON Estructurado
-    5. Todo → CLIP → Embeddings
-    6. Embeddings → ChromaDB
+    MODO 1: Indexación completa (6 pasos)
     """
     logger.info("=" * 60)
-    logger.info("INICIANDO MODO INDEXACIÓN (Pipeline ADE Corregido)")
+    logger.info("INICIANDO MODO INDEXACIÓN")
     logger.info("=" * 60)
     
     try:
-        # PASO 1: Convertir Excel a imágenes
-        logger.info("\n[PASO 1] Convirtiendo Excel a imágenes PNG...")
+        # PASO 1: Excel → PNG
+        logger.info("\n[PASO 1] Convirtiendo Excel a imágenes...")
         excel_results = process_all_excels()
-        logger.info(
-            f"Resultado: {len([r for r in excel_results if r.get('status') == 'success'])} Excel procesados"
-        )
+        success_count = len([r for r in excel_results if r.get('status') == 'success'])
+        logger.info(f"✓ {success_count} archivos Excel procesados")
         
-        # (PASO 2 eliminado)
-        # Antes: convertir PDF a imágenes (fallback). Ahora los PDFs se procesan directamente en el PASO 3.
+        # PASO 3: PDF/PNG → Markdown (ADE)
+        logger.info("\n[PASO 3] Extrayendo Markdown con API ADE...")
+        ocr_results = process_all_documents()
+        success_count = len([r for r in ocr_results if r.get('status') == 'success'])
+        logger.info(f"✓ {success_count} documentos procesados")
         
-        # --- PASO 3 CORREGIDO ---
-        # Ahora extrae Markdown de los PDF originales y las imágenes de Excel
-        logger.info("\n[PASO 3] Extrayendo Markdown estructurado (con API ADE)...")
-        ocr_results = process_all_documents()  # Llamada a la función moderna
-        logger.info(
-            f"Resultado: {len([r for r in ocr_results if r.get('status') == 'success'])} documentos procesados por ADE"
-        )
-        
-        # --- PASO 4 CORREGIDO ---
-        # Convierte el Markdown (de ADE) a JSON (con LLM)
-        logger.info("\n[PASO 4] Convirtiendo Markdown a JSON (con LLM)...")
+        # PASO 4: Markdown → JSON estructurado
+        logger.info("\n[PASO 4] Convirtiendo Markdown a JSON estructurado...")
         parser_results = process_all_extracted_text()
-        logger.info(
-            f"Resultado: {len([r for r in parser_results if r.get('status') == 'success'])} JSONs estructurados"
-        )
+        success_count = len([r for r in parser_results if r.get('status') == 'success'])
+        logger.info(f"✓ {success_count} JSONs estructurados generados")
         
-        # PASO 5: Generar embeddings con CLIP
-        logger.info("\n[PASO 5] Generando embeddings multimodales con CLIP...")
+        # PASO 5: Generar embeddings
+        logger.info("\n[PASO 5] Generando embeddings multimodales...")
         embedding_results = process_all_multimodal()
-        logger.info(f"Resultado: {embedding_results}")
+        logger.info(f"✓ {embedding_results.get('total_embeddings', 0)} embeddings generados")
         
-        # PASO 6: Indexar en ChromaDB (reemplazo de index_all_embeddings)
+        # PASO 6: Indexar en ChromaDB
         logger.info("\n[PASO 6] Indexando en ChromaDB...")
-        indexer = MultimodalIndexer()  # Instanciamos el indexador una sola vez
+        index_result = index_all_embeddings()
+        logger.info(f"✓ {index_result.indexed} registros indexados")
         
-        try:
-            # Definimos rutas base de embeddings
-            embeddings_dir = Path("data/embeddings")
-            image_embed_file = embeddings_dir / "image_embeddings.json"
-            text_embed_file = embeddings_dir / "text_embeddings.json"
-
-            all_documents_data = []
-
-            # Cargar embeddings de imágenes
-            if image_embed_file.exists():
-                with open(image_embed_file, "r", encoding="utf-8") as f:
-                    image_data = json.load(f)
-                    all_documents_data.extend(image_data)
-                    logger.info(f"Cargados {len(image_data)} embeddings de imágenes.")
-            else:
-                logger.warning(f"No se encontró el archivo de embeddings: {image_embed_file}")
-
-            # Cargar embeddings de texto
-            if text_embed_file.exists():
-                with open(text_embed_file, "r", encoding="utf-8") as f:
-                    text_data = json.load(f)
-                    all_documents_data.extend(text_data)
-                    logger.info(f"Cargados {len(text_data)} embeddings de texto.")
-            else:
-                logger.warning(f"No se encontró el archivo de embeddings: {text_embed_file}")
-
-            # Proceder a indexar si hay datos
-            if not all_documents_data:
-                logger.warning(
-                    "No se encontraron embeddings para indexar. El pipeline se completó sin indexar."
-                )
-                index_results = {
-                    "status": "warning",
-                    "message": "No embeddings found to index",
-                }
-            else:
-                logger.info(
-                    f"Indexando un total de {len(all_documents_data)} documentos en ChromaDB..."
-                )
-                # Asumimos que index_batch toma la lista de diccionarios con embedding, id/document/metadata
-                index_results = indexer.index_batch(all_documents_data)
-                logger.info(f"Resultado de indexación: {index_results}")
-
-        except Exception as e:
-            logger.error(f"Falló el Paso 6 (Indexación manual de JSONs): {e}", exc_info=True)
-            index_results = {"status": "error", "error": str(e)}
-        
-        # Mostrar estadísticas finales
-        logger.info("\n" + "=" * 60)
-        logger.info("INDEXACIÓN COMPLETADA")
-        logger.info("=" * 60)
-        
-        # (Esta parte de 'chroma_mgr' no existe, se mantiene comentada para evitar errores)
-        # from src.vectorstore import get_chroma_manager
-        # chroma_mgr = get_chroma_manager()
-        # collection_info = chroma_mgr.get_collection_info()
-        # logger.info(f"Documentos en ChromaDB: {collection_info.get('document_count', 0)}")
-        
-        # Usamos el indexer ya instanciado arriba
+        # Estadísticas finales
+        indexer = MultimodalIndexer()
         stats = indexer.get_collection_stats()
-        logger.info(f"Estadísticas: {stats}")
+        
+        logger.info("\n" + "=" * 60)
+        logger.info("✓ INDEXACIÓN COMPLETADA")
+        logger.info(f"  Total en ChromaDB: {stats.get('item_count', 0)} documentos")
+        logger.info("=" * 60)
         
         return {"status": "success", "mode": "indexing"}
     
     except Exception as e:
-        logger.error(f"Error fatal durante indexación: {e}", exc_info=True)
+        logger.error(f"Error durante indexación: {e}", exc_info=True)
         return {"status": "error", "mode": "indexing", "error": str(e)}
 
 
 def query_mode(user_query: str = None):
     """
-    MODO 2: Consulta (usar el agente)
+    MODO 2: Consulta con el agente
     """
     logger.info("=" * 60)
     logger.info("INICIANDO MODO CONSULTA")
@@ -152,12 +78,10 @@ def query_mode(user_query: str = None):
     
     try:
         if user_query is None:
-            # Interfaz interactiva
             logger.info("\nIngresa tu pregunta (o 'salir' para terminar):")
             user_query = input("> ").strip()
             
             if user_query.lower() == "salir":
-                logger.info("Terminando...")
                 return {"status": "exit"}
         
         logger.info(f"Query: {user_query}")
@@ -171,9 +95,26 @@ def query_mode(user_query: str = None):
         
         if result.get("status") == "success":
             response = result.get("response", {})
-            logger.info(f"Respuesta: {response.get('answer', 'Sin respuesta')}")
-            logger.info(f"Documentos usados: {len(response.get('sources', []))}")
-            logger.info(f"Confianza: {response.get('quality_score', 0):.2%}")
+            
+            # Mostrar respuesta
+            print(f"\n{response.get('answer', 'Sin respuesta')}\n")
+            
+            # Mostrar fuentes citadas
+            sources = response.get("sources", [])
+            cited_sources = [s for s in sources if s.get("cited")]
+            
+            if cited_sources:
+                print("Fuentes citadas:")
+                for source in cited_sources:
+                    print(f"  - {source.get('source_file')} ({source.get('type')}) - Similitud: {source.get('similarity', 0):.1%}")
+            
+            print(f"\nConfianza: {response.get('quality_score', 0):.1%}")
+            
+            # Mostrar razonamiento (Chain of Thought)
+            if response.get("reasoning_steps"):
+                print("\nPasos de razonamiento:")
+                for step in response["reasoning_steps"]:
+                    print(f"  • {step}")
         else:
             logger.error(f"Error: {result.get('error', 'Error desconocido')}")
         
@@ -185,17 +126,15 @@ def query_mode(user_query: str = None):
 
 
 def interactive_mode():
-    """
-    Modo interactivo continuo
-
-    """
+    """Modo interactivo continuo"""
     logger.info("=" * 60)
     logger.info("MODO INTERACTIVO")
     logger.info("=" * 60)
-    logger.info("Escribe 'indexar' para indexar documentos")
-    logger.info("Escribe 'consultar' para hacer una pregunta")
-    logger.info("Escribe 'stats' para ver estadísticas de ChromaDB")
-    logger.info("Escribe 'salir' para terminar")
+    logger.info("Comandos disponibles:")
+    logger.info("  indexar  - Ejecutar pipeline de indexación")
+    logger.info("  consultar - Hacer una pregunta")
+    logger.info("  stats    - Ver estadísticas de ChromaDB")
+    logger.info("  salir    - Terminar")
     logger.info("=" * 60)
     
     while True:
@@ -216,9 +155,11 @@ def interactive_mode():
                 try:
                     indexer = MultimodalIndexer()
                     stats = indexer.get_collection_stats()
-                    logger.info(f"Estadísticas de ChromaDB: {stats}")
+                    print(f"\nEstadísticas de ChromaDB:")
+                    print(f"  Documentos totales: {stats.get('item_count', 0)}")
+                    print(f"  Colección: {stats.get('collection_name', 'N/A')}")
                 except Exception as e:
-                    logger.error(f"Error al obtener estadísticas: {e}")
+                    logger.error(f"Error obteniendo estadísticas: {e}")
             else:
                 logger.info("Comando no reconocido")
         
@@ -230,8 +171,7 @@ def interactive_mode():
 
 
 def main():
-    """Función principal (Sin cambios)"""
-    
+    """Función principal"""
     if len(sys.argv) > 1:
         mode = sys.argv[1].lower()
         

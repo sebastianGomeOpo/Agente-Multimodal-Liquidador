@@ -1,381 +1,429 @@
 """
-structure_parser.py - PASO 4 de la Pipeline de Indexación (ENFOQUE REFINADO)
+PASO 4: Extracción estructurada usando Landing AI ADE Extract API
+Convierte Markdown OCR → JSON estructurado (OperacionNave)
 
-Objetivo: Extraer *únicamente* la información que importa para operaciones de naves:
-- recalada
-- nombre de la nave
-- fecha de inicio de operación
-- fecha de fin de operación
-- bodegas con tonelaje (> 0)
-- tonelaje por bodega
-- lote(s) que ingresaron a cada bodega
-- clientes atendidos en la nave
-- por cada lote: códigos de facturación según el cliente
-
-Implementa extracción con LLM usando salida estructurada (Pydantic) para robustez.
-Incluye post-proceso "inteligente" para normalizar números, fechas y deducir clientes si faltan.
+CAMBIO CLAVE: Ahora usa ADE Extract API en lugar de un LLM genérico
 """
 
-# --- Importaciones ---
 import json
-import re
+import requests
 from pathlib import Path
-from typing import List, Dict, Any, Optional, Type
-
-from pydantic import BaseModel, Field, ValidationError
-
-from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.messages import SystemMessage, HumanMessage
-from langchain_openai import ChatOpenAI
+from typing import Dict, Any, List, Optional
+from dataclasses import dataclass
 
 from src.utils.logger import get_logger
 from src.utils.config import (
     EXTRACTED_TEXT_DIR,
     EXTRACTED_TABLES_DIR,
-    LLM_MODEL,
-    LLM_TEMPERATURE,
+    LANDING_AI_API_KEY
 )
 
-# Configuración del logger
 logger = get_logger(__name__)
 
 
 # ============================================================
-# 1) ESQUEMA DE SALIDA (solo lo que nos importa)
+# ESQUEMA JSON PARA ADE EXTRACT
 # ============================================================
 
-class LoteFactura(BaseModel):
-    """
-    Información por lote (a nivel de facturación y cliente).
-    """
-    lote: str = Field(description="Identificador del lote (string exacto tal como aparece en el documento).")
-    cliente: Optional[str] = Field(None, description="Cliente asociado a este lote (si se deduce).")
-    codigos_facturacion: List[str] = Field(default_factory=list, description="Códigos/IDs de factura del PDF para este lote y cliente.")
-    bodega: Optional[str] = Field(None, description="Bodega en la que ingresó este lote (si aplica).")
-    tonelaje: Optional[float] = Field(None, description="Tonelaje asociado a este lote (si se reporta).")
-
-class BodegaRegistro(BaseModel):
-    """
-    Registro por bodega con tonelaje y lotes asociados.
-    """
-    bodega: str = Field(description="Nombre o identificador de la bodega (e.g., 'B1', 'Bodega 3').")
-    tonelaje: float = Field(description="Tonelaje total reportado en esta bodega (solo bodegas con tonelaje > 0).")
-    lotes: List[str] = Field(default_factory=list, description="Lista de lotes (strings) que ingresaron a esta bodega.")
-
-class OperacionNave(BaseModel):
-    """
-    Esquema raíz: solo campos operativos relevantes.
-    """
-    recalada: Optional[str] = Field(None, description="Identificador o nombre de la recalada/escala.")
-    nave_nombre: Optional[str] = Field(None, description="Nombre de la nave/barco.")
-    fecha_inicio_operacion: Optional[str] = Field(None, description="YYYY-MM-DD si es posible normalizar.")
-    fecha_fin_operacion: Optional[str] = Field(None, description="YYYY-MM-DD si es posible normalizar.")
-    bodegas: List[BodegaRegistro] = Field(default_factory=list, description="Solo bodegas con tonelaje > 0.")
-    clientes: List[str] = Field(default_factory=list, description="Clientes atendidos en la nave.")
-    lotes_facturacion: List[LoteFactura] = Field(
-        default_factory=list,
-        description="Detalle por lote con relación cliente ↔ códigos de facturación."
-    )
-    # Campo opcional que mejora la “visualización inteligente”
-    vista_inteligente: Optional[str] = Field(
-        None,
-        description="Resumen en Markdown de la operación (generado en post-proceso)."
-    )
+ADE_EXTRACT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "recalada": {
+            "type": ["string", "null"],
+            "description": "Código único de la recalada (ej: 10841, 25105)"
+        },
+        "nave_nombre": {
+            "type": ["string", "null"],
+            "description": "Nombre completo de la nave (ej: SKY KNIGHT, MV OCEAN SPIRIT)"
+        },
+        "imo": {
+            "type": ["string", "null"],
+            "description": "Número IMO de la nave (ej: 9561942)"
+        },
+        "bandera": {
+            "type": ["string", "null"],
+            "description": "País de bandera de la nave"
+        },
+        "puerto_origen": {
+            "type": ["string", "null"],
+            "description": "Puerto de origen de la nave"
+        },
+        "puerto_destino": {
+            "type": ["string", "null"],
+            "description": "Puerto de destino de la nave"
+        },
+        "muelle": {
+            "type": ["string", "null"],
+            "description": "Muelle donde atracó la nave (ej: F, A, B)"
+        },
+        "fecha_inicio_operacion": {
+            "type": ["string", "null"],
+            "description": "Fecha y hora de inicio de operación (formato ISO o cualquier formato encontrado)"
+        },
+        "fecha_fin_operacion": {
+            "type": ["string", "null"],
+            "description": "Fecha y hora de término de operación"
+        },
+        "fecha_arribo": {
+            "type": ["string", "null"],
+            "description": "Fecha y hora de arribo al puerto"
+        },
+        "fecha_atraque": {
+            "type": ["string", "null"],
+            "description": "Fecha y hora de atraque"
+        },
+        "fecha_desatraque": {
+            "type": ["string", "null"],
+            "description": "Fecha y hora de desatraque"
+        },
+        "producto": {
+            "type": ["string", "null"],
+            "description": "Tipo de carga o producto (ej: CONCENTRADO DE COBRE, CLINKER)"
+        },
+        "tonelaje_total": {
+            "type": ["number", "null"],
+            "description": "Tonelaje total de la operación (número sin comas)"
+        },
+        "regimen": {
+            "type": ["string", "null"],
+            "description": "Régimen de operación (ej: EXPORTACION, IMPORTACION)"
+        },
+        "tipo_operacion": {
+            "type": ["string", "null"],
+            "description": "Tipo de operación (ej: EMBARQUE, DESCARGA, EMBARQUE INDIRECTO)"
+        },
+        "agente_maritimo": {
+            "type": ["string", "null"],
+            "description": "Nombre del agente marítimo"
+        },
+        "agente_estiba": {
+            "type": ["string", "null"],
+            "description": "Nombre del agente de estiba"
+        },
+        "horas_operacion": {
+            "type": ["number", "null"],
+            "description": "Horas totales de operación (número decimal)"
+        },
+        "horas_amarradero": {
+            "type": ["number", "null"],
+            "description": "Horas totales en amarradero (número decimal)"
+        },
+        "rendimiento_tn_hr": {
+            "type": ["number", "null"],
+            "description": "Rendimiento en toneladas por hora"
+        },
+        "clientes": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Lista de clientes involucrados en la operación"
+        },
+        "bodegas": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "bodega": {
+                        "type": "string",
+                        "description": "Identificador de bodega (ej: N°1, N°2, HOLD 1)"
+                    },
+                    "operacion": {
+                        "type": ["string", "null"],
+                        "description": "Tipo de operación en esta bodega (ej: EMBARQUE, DESCARGA)"
+                    },
+                    "tonelaje": {
+                        "type": ["number", "null"],
+                        "description": "Tonelaje movido en esta bodega (número sin comas)"
+                    },
+                    "lotes": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Códigos de lote asociados a esta bodega"
+                    }
+                }
+            },
+            "description": "Lista de bodegas con sus operaciones"
+        },
+        "lotes_facturacion": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "lote": {
+                        "type": "string",
+                        "description": "Código del lote"
+                    },
+                    "cliente": {
+                        "type": ["string", "null"],
+                        "description": "Cliente asociado al lote"
+                    },
+                    "codigos_facturacion": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Códigos de facturación asociados"
+                    }
+                }
+            },
+            "description": "Lotes con información de facturación"
+        }
+    },
+    "required": []  # Ningún campo es obligatorio, extraer lo que se pueda
+}
 
 
 # ============================================================
-# 2) PARSER ESTRUCTURADO (con salida tipada) + utilidades
+# CLIENTE ADE EXTRACT
 # ============================================================
+
+class ADEExtractClient:
+    """
+    Cliente para interactuar con la API de Landing AI ADE Extract.
+    """
+    
+    def __init__(self, api_key: str):
+        """
+        Inicializa el cliente con la API key.
+        
+        Args:
+            api_key: API key de Landing AI
+        """
+        self.api_key = api_key
+        self.base_url = "https://api.va.landing.ai/v1/ade"
+        self.headers = {
+            "Authorization": f"Bearer {self.api_key}"
+        }
+    
+    def extract_from_markdown(
+        self,
+        markdown: str,
+        schema: Dict[str, Any],
+        model: str = "extract-latest"
+    ) -> Dict[str, Any]:
+        """
+        Extrae información estructurada de un Markdown usando ADE Extract.
+        
+        Args:
+            markdown: Contenido Markdown a procesar
+            schema: Esquema JSON para la extracción
+            model: Modelo a usar (default: extract-latest)
+        
+        Returns:
+            Dict con los campos extraídos
+        """
+        url = f"{self.base_url}/extract"
+        
+        # Preparar los datos del request
+        files = {
+            'markdown': ('document.md', markdown, 'text/markdown'),
+            'schema': (None, json.dumps(schema), 'application/json'),
+            'model': (None, model)
+        }
+        
+        try:
+            response = requests.post(
+                url,
+                headers=self.headers,
+                files=files,
+                timeout=60  # 60 segundos timeout
+            )
+            response.raise_for_status()
+            
+            result = response.json()
+            return result.get('extraction', {})
+            
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error en ADE Extract API: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                logger.error(f"Response status: {e.response.status_code}")
+                logger.error(f"Response body: {e.response.text}")
+            return {}
+
+
+# ============================================================
+# PROCESADOR DE ESTRUCTURA
+# ============================================================
+
+@dataclass
+class ParserResult:
+    """Resultado del procesamiento de un archivo."""
+    source_file: str
+    success: bool
+    output_file: Optional[str] = None
+    error: Optional[str] = None
+
 
 class StructureParser:
     """
-    Toma texto en formato MARKDOWN (proveniente de ADE) y usa un LLM
-    para extraer SOLO la información operacional relevante (OperacionNave).
+    Parser que convierte Markdown (del ADE Parse) en JSON estructurado
+    usando ADE Extract API.
     """
-
-    def __init__(self, llm: BaseChatModel, schema: Type[BaseModel] = OperacionNave):
-        self.llm = llm
-        self.target_schema = schema
-        self.target_schema_json = json.dumps(schema.model_json_schema(), indent=2)
-        logger.info(f"StructureParser inicializado con el esquema: {schema.__name__}")
-
-    def _get_parsing_prompt(self) -> ChatPromptTemplate:
+    
+    def __init__(self, api_key: str = LANDING_AI_API_KEY):
         """
-        Prompt *enfocado* al dominio: documentos en Markdown con tablas/listas.
-        Pide explícitamente SOLO los campos operativos.
+        Inicializa el parser con el cliente ADE Extract.
+        
+        Args:
+            api_key: API key de Landing AI
         """
-        system_prompt = f"""
-Eres un asistente experto en extracción de datos portuarios/logísticos.
-Tu tarea: leer un documento en **Markdown** y devolver **EXCLUSIVAMENTE** un JSON
-válido que cumpla el esquema. No devuelvas texto adicional ni bloques de código.
-
-EXTRAE SOLO ESTOS CAMPOS (ignora todo lo demás):
-- recalada
-- nave_nombre
-- fecha_inicio_operacion (YYYY-MM-DD si puedes)
-- fecha_fin_operacion (YYYY-MM-DD si puedes)
-- bodegas: SOLO bodegas con tonelaje > 0.
-  - bodega (string)
-  - tonelaje (float)
-  - lotes: lista de strings de lotes que ingresaron a esa bodega
-- clientes: lista con los clientes atendidos en la nave (únicos, normalizados)
-- lotes_facturacion: por cada lote:
-  - lote (string)
-  - cliente (string si se deduce)
-  - codigos_facturacion (lista de strings)
-  - bodega (string si aplica)
-  - tonelaje (float si aplica)
-
-REGLAS:
-- Limpia números: "$1,234.56" → 1234.56 ; "1.234,56" → 1234.56
-- Normaliza fechas a YYYY-MM-DD (si no es posible, deja el valor original o null)
-- Devuelve solo literales JSON que el esquema pueda validar.
-- NO inventes campos fuera del esquema, no omitas claves requeridas del esquema.
-- Si careces de información, usa valores nulos o listas vacías según el tipo.
-
-ESQUEMA OBJETIVO:
-{self.target_schema_json}
-        """.strip()
-
-        return ChatPromptTemplate.from_messages([
-            SystemMessage(content=system_prompt),
-            HumanMessage(content="{ocr_text}")  # el input real en Markdown
-        ])
-
-    # Fallback por si alguna vez se usa salida no estructurada
-    def _extract_json_block(self, text: str) -> str:
-        match = re.search(r'\{.*\}', text, re.DOTALL)
-        return match.group(0) if match else text
-
-    # ---------------------------
-    # Normalizadores inteligentes
-    # ---------------------------
-    @staticmethod
-    def _normalize_number(x) -> Optional[float]:
-        if x is None:
-            return None
-        if isinstance(x, (int, float)):
-            return float(x)
-        s = str(x).strip()
-        if not s:
-            return None
-        # Quitar símbolos comunes y unificar separadores
-        s = s.replace("$", "").replace("€", "").replace("S/.", "").replace("S/", "")
-        s = s.replace(" ", "")
-        # Formatos 1.234,56 → 1234.56
-        if "," in s and "." in s and s.rfind(",") > s.rfind("."):
-            s = s.replace(".", "").replace(",", ".")
-        else:
-            s = s.replace(",", "")
+        self.client = ADEExtractClient(api_key)
+        self.schema = ADE_EXTRACT_SCHEMA
+        logger.info(f"StructureParser inicializado con ADE Extract API")
+    
+    def parse_markdown_file(self, markdown_path: Path) -> Optional[Dict[str, Any]]:
+        """
+        Parsea un archivo Markdown y extrae la estructura.
+        
+        Args:
+            markdown_path: Ruta al archivo Markdown (_text.json)
+        
+        Returns:
+            Dict con los datos estructurados o None si falla
+        """
         try:
-            return float(s)
-        except Exception:
+            # Leer el archivo JSON que contiene el Markdown
+            with open(markdown_path, 'r', encoding='utf-8') as f:
+                markdown_data = json.load(f)
+            
+            markdown_text = markdown_data.get('text', '')
+            
+            if not markdown_text or len(markdown_text.strip()) < 10:
+                logger.warning(f"Markdown vacío o muy corto en {markdown_path.name}")
+                return None
+            
+            # Llamar a ADE Extract
+            logger.info(f"Iniciando parseo estructurado con ADE Extract...")
+            extracted_data = self.client.extract_from_markdown(
+                markdown=markdown_text,
+                schema=self.schema,
+                model="extract-latest"
+            )
+            
+            if not extracted_data:
+                logger.warning(f"ADE Extract no retornó datos para {markdown_path.name}")
+                return None
+            
+            logger.info(f"Parseo y extracción completados.")
+            return extracted_data
+            
+        except json.JSONDecodeError as e:
+            logger.error(f"Error al leer JSON de {markdown_path}: {e}")
             return None
-
-    @staticmethod
-    def _smart_clients(op: Dict[str, Any]) -> List[str]:
-        """
-        Deduce 'clientes' si viene vacío: agrupa clientes de lotes_facturacion.
-        """
-        clientes = set(op.get("clientes") or [])
-        for lf in op.get("lotes_facturacion", []) or []:
-            c = (lf or {}).get("cliente")
-            if c:
-                clientes.add(str(c).strip())
-        # Limpieza básica
-        clientes = {c for c in clientes if c}
-        return sorted(clientes)
-
-    @staticmethod
-    def _smart_filter_bodegas(op: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """
-        Filtra bodegas con tonelaje > 0 y normaliza tonelajes.
-        """
-        bodegas = []
-        for b in (op.get("bodegas") or []):
-            tonelaje = StructureParser._normalize_number(b.get("tonelaje"))
-            if tonelaje and tonelaje > 0:
-                bodegas.append({
-                    "bodega": str(b.get("bodega") or "").strip(),
-                    "tonelaje": float(round(tonelaje, 3)),
-                    "lotes": [str(x).strip() for x in (b.get("lotes") or []) if str(x).strip()]
-                })
-        return bodegas
-
-    @staticmethod
-    def _smart_link_bodega_in_lotes(op: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """
-        Si en lotes_facturacion falta la 'bodega', intenta deducirla
-        buscando el lote dentro de bodegas.lotes.
-        """
-        bodegas = op.get("bodegas") or []
-        lotes_fact = []
-        for lf in (op.get("lotes_facturacion") or []):
-            lf = dict(lf or {})
-            if not lf.get("bodega"):
-                lote = lf.get("lote")
-                if lote:
-                    for b in bodegas:
-                        if lote in (b.get("lotes") or []):
-                            lf["bodega"] = b.get("bodega")
-                            break
-            # Normaliza tonelaje del lote si es string
-            lf["tonelaje"] = StructureParser._normalize_number(lf.get("tonelaje"))
-            lotes_fact.append(lf)
-        return lotes_fact
-
-    @staticmethod
-    def _build_smart_view(op: Dict[str, Any]) -> str:
-        """
-        Genera una vista Markdown compacta e “inteligente” con lo clave.
-        """
-        lines = []
-        lines.append(f"## Operación de Nave")
-        lines.append(f"- **Recalada:** {op.get('recalada') or '-'}")
-        lines.append(f"- **Nave:** {op.get('nave_nombre') or '-'}")
-        lines.append(f"- **Inicio:** {op.get('fecha_inicio_operacion') or '-'}")
-        lines.append(f"- **Fin:** {op.get('fecha_fin_operacion') or '-'}")
-        lines.append("")
-        # Bodegas
-        bodegas = op.get("bodegas") or []
-        if bodegas:
-            lines.append("### Bodegas con tonelaje")
-            for b in bodegas:
-                lines.append(f"- **{b.get('bodega','?')}** → {b.get('tonelaje','?')} t | Lotes: {', '.join(b.get('lotes') or []) or '-'}")
-            lines.append("")
-        # Clientes
-        clientes = op.get("clientes") or []
-        if clientes:
-            lines.append(f"### Clientes atendidos ({len(clientes)})")
-            lines.append(", ".join(clientes))
-            lines.append("")
-        # Lotes y facturación
-        lotes_fact = op.get("lotes_facturacion") or []
-        if lotes_fact:
-            lines.append("### Lotes ↔ Facturación")
-            for lf in lotes_fact:
-                lote = lf.get("lote") or "?"
-                cliente = lf.get("cliente") or "-"
-                bodega = lf.get("bodega") or "-"
-                tonelaje = lf.get("tonelaje")
-                t_str = f"{tonelaje} t" if tonelaje is not None else "-"
-                cods = lf.get("codigos_facturacion") or []
-                lines.append(f"- **Lote {lote}** | Cliente: {cliente} | Bodega: {bodega} | Tonelaje: {t_str} | Facturas: {', '.join(cods) or '-'}")
-        return "\n".join(lines)
-
-    # ---------------------------
-    # Proceso principal
-    # ---------------------------
-    def parse_document(self, ocr_text: str) -> Dict[str, Any]:
-        """
-        Lee Markdown (ocr_text), invoca LLM con salida estructurada y aplica
-        post-procesado para limpiar y completar relaciones.
-        """
-        logger.info("Iniciando parseo estructurado (Markdown -> OperacionNave)...")
-
-        # 1) LLM con salida estructurada (Pydantic)
-        prompt = self._get_parsing_prompt()
-        structured_llm = self.llm.with_structured_output(self.target_schema)
-        chain = prompt | structured_llm
-
-        try:
-            logger.debug("Invocando LLM (structured output)...")
-            result_obj = chain.invoke({"ocr_text": ocr_text})
-
-            # 2) Validación Pydantic (por si acaso) + dict
-            validated = self.target_schema.model_validate(result_obj)
-            op = validated.model_dump()
-
         except Exception as e:
-            logger.error(f"Fallo en structured output; intentando fallback estándar: {e}", exc_info=True)
-            # --- Fallback a modo “texto → JSON” clásico ---
-            raw_chain = prompt | self.llm
-            response = raw_chain.invoke({"ocr_text": ocr_text})
-            raw_content = response.content
-            json_string = self._extract_json_block(raw_content)
-
-            try:
-                parsed_json = json.loads(json_string)
-            except json.JSONDecodeError as je:
-                logger.error(f"Respuesta del LLM no fue JSON válido: {je}")
-                logger.debug(f"Respuesta LLM (raw): {raw_content}")
-                raise ValueError(f"La respuesta del LLM no fue un JSON válido: {je}")
-
-            try:
-                validated_data = self.target_schema.model_validate(parsed_json)
-                op = validated_data.model_dump()
-            except ValidationError as ve:
-                logger.error(f"Datos del LLM no validan contra el esquema: {ve}")
-                logger.debug(f"JSON del LLM (parseado): {parsed_json}")
-                raise ValueError(f"Datos del LLM no válidos: {ve}")
-
-        # 3) Post-proceso “inteligente”
-        op["bodegas"] = self._smart_filter_bodegas(op)
-        op["lotes_facturacion"] = self._smart_link_bodega_in_lotes(op)
-        op["clientes"] = self._smart_clients(op)
-        op["vista_inteligente"] = self._build_smart_view(op)
-
-        logger.info("Parseo y normalización completados.")
-        return op
+            logger.error(f"Error inesperado al parsear {markdown_path}: {e}")
+            return None
+    
+    def save_structured_json(
+        self,
+        data: Dict[str, Any],
+        output_path: Path
+    ) -> bool:
+        """
+        Guarda los datos estructurados en un archivo JSON.
+        
+        Args:
+            data: Datos estructurados
+            output_path: Ruta de salida
+        
+        Returns:
+            True si se guardó exitosamente
+        """
+        try:
+            with open(output_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            logger.info(f"JSON (OperacionNave) guardado en: {output_path.name}")
+            return True
+        except Exception as e:
+            logger.error(f"Error al guardar JSON en {output_path}: {e}")
+            return False
 
 
 # ============================================================
-# 3) ORQUESTADOR DEL PASO 4 (procesa todos los *_text.json)
+# FUNCIÓN PRINCIPAL
 # ============================================================
 
-def process_all_extracted_text() -> List[Dict[str, Any]]:
+def process_all_extracted_text() -> Dict[str, Any]:
     """
-    Orquesta el PASO 4:
-      1. Inicializa LLM + Parser con esquema OperacionNave.
-      2. Busca todos los *_text.json (Markdown).
-      3. Parsea cada archivo y guarda *_structure.json en EXTRACTED_TABLES_DIR.
+    Procesa todos los archivos Markdown extraídos y genera JSONs estructurados.
+    
+    Returns:
+        Dict con estadísticas del procesamiento
     """
     logger.info("Iniciando PASO 4: Extracción enfocada (Markdown → OperacionNave JSON)...")
-
-    try:
-        llm = ChatOpenAI(model=LLM_MODEL, temperature=LLM_TEMPERATURE)
-        parser = StructureParser(llm=llm, schema=OperacionNave)
-    except Exception as e:
-        logger.error(f"No se pudo inicializar el LLM para el parser: {e}")
-        logger.error("Asegúrate de que OPENAI_API_KEY esté en tu archivo .env")
-        return [{"status": "error", "message": "Fallo al iniciar LLM"}]
-
+    
+    # Crear directorio de salida si no existe
+    EXTRACTED_TABLES_DIR.mkdir(parents=True, exist_ok=True)
+    
+    # Buscar todos los archivos _text.json
     text_files = list(EXTRACTED_TEXT_DIR.glob("*_text.json"))
+    
+    if not text_files:
+        logger.warning(f"No se encontraron archivos de texto en {EXTRACTED_TEXT_DIR}")
+        return {
+            "total_files": 0,
+            "success": 0,
+            "failed": 0,
+            "results": []
+        }
+    
     logger.info(f"Se encontraron {len(text_files)} archivos de Markdown para parsear.")
-
+    
+    # Inicializar parser
+    parser = StructureParser()
+    
     results = []
+    success_count = 0
+    failed_count = 0
+    
+    # Procesar cada archivo
+    for text_file in text_files:
+        # Nombre de salida: reemplazar _text.json por _structure.json
+        output_name = text_file.stem.replace('_text', '_structure') + '.json'
+        output_path = EXTRACTED_TABLES_DIR / output_name
+        
+        # Parsear con ADE Extract
+        structured_data = parser.parse_markdown_file(text_file)
+        
+        if structured_data is None:
+            failed_count += 1
+            results.append(ParserResult(
+                source_file=text_file.name,
+                success=False,
+                error="No se pudo extraer información"
+            ))
+            continue
+        
+        # Guardar JSON estructurado
+        if parser.save_structured_json(structured_data, output_path):
+            success_count += 1
+            results.append(ParserResult(
+                source_file=text_file.name,
+                success=True,
+                output_file=output_name
+            ))
+        else:
+            failed_count += 1
+            results.append(ParserResult(
+                source_file=text_file.name,
+                success=False,
+                error="Error al guardar JSON"
+            ))
+    
+    logger.info(f"Parseo completado: {len(text_files)} archivos procesados.")
+    
+    return {
+        "total_files": len(text_files),
+        "success": success_count,
+        "failed": failed_count,
+        "results": results
+    }
 
-    for text_file_path in text_files:
-        try:
-            with open(text_file_path, "r", encoding="utf-8") as f:
-                ocr_data = json.load(f)
 
-            ocr_text = ocr_data.get("text")
-            if not ocr_text:
-                logger.warning(f"Entrada vacía (sin texto/markdown): {text_file_path.name}")
-                results.append({"status": "skipped", "file": text_file_path.name, "message": "Texto vacío"})
-                continue
+# ============================================================
+# PUNTO DE ENTRADA
+# ============================================================
 
-            logger.debug(f"Parseando {text_file_path.name}...")
-            structured_data = parser.parse_document(ocr_text)
-
-            output_filename = f"{text_file_path.stem.replace('_text', '')}_structure.json"
-            output_path = EXTRACTED_TABLES_DIR / output_filename
-
-            with open(output_path, "w", encoding="utf-8") as f:
-                json.dump(structured_data, f, ensure_ascii=False, indent=2)
-
-            logger.info(f"JSON (OperacionNave) guardado en: {output_path.name}")
-            results.append({
-                "status": "success",
-                "file": text_file_path.name,
-                "output": output_path.name
-            })
-
-        except Exception as e:
-            logger.error(f"Fallo al parsear el archivo {text_file_path.name}: {e}", exc_info=True)
-            results.append({"status": "error", "file": text_file_path.name, "message": str(e)})
-
-    logger.info(f"Parseo completado: {len(results)} archivos procesados.")
-    return results
+if __name__ == "__main__":
+    result = process_all_extracted_text()
+    print(f"\nProcesamiento completado:")
+    print(f"  Total: {result['total_files']}")
+    print(f"  Exitosos: {result['success']}")
+    print(f"  Fallidos: {result['failed']}")

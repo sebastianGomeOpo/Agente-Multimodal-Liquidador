@@ -11,77 +11,62 @@ logger = get_logger(__name__)
 
 
 class AgentStateGraph:
-    """Definición del grafo del agente con LangGraph"""
+    """Grafo del agente con ReAct + CoT"""
     
     def __init__(self):
-        """Inicializa el grafo del agente"""
         try:
-            logger.info("Inicializando AgentStateGraph")
+            logger.info("Inicializando AgentStateGraph (ReAct)")
             self.graph = self._build_graph()
-            logger.info("Grafo inicializado exitosamente")
+            logger.info("✓ Grafo inicializado")
         except Exception as e:
-            logger.error(f"Error al inicializar grafo: {e}")
+            logger.error(f"Error inicializando grafo: {e}")
             raise
     
     def _build_graph(self) -> StateGraph:
         """
         Construye el grafo del agente
         
-        ESTRUCTURA DEL GRAFO:
+        FLUJO:
         START → query_node → retrieve_node → reason_node → format_node → END
-        
-        Returns:
-            StateGraph: Grafo compilado
         """
-        
-        # Crear StateGraph
         graph = StateGraph(dict)
         
-        # Agregar nodos
         graph.add_node("query_node", query_node)
         graph.add_node("retrieve_node", retrieve_node)
         graph.add_node("reason_node", reason_node)
         graph.add_node("format_node", format_node)
         
-        # Definir edges (transiciones)
         graph.add_edge(START, "query_node")
         graph.add_edge("query_node", "retrieve_node")
         graph.add_edge("retrieve_node", "reason_node")
         graph.add_edge("reason_node", "format_node")
         graph.add_edge("format_node", END)
         
-        # Compilar el grafo
         compiled_graph = graph.compile()
-        
-        logger.info("Grafo compilado con éxito")
+        logger.info("✓ Grafo compilado")
         return compiled_graph
     
     def execute(self, query: str) -> Dict[str, Any]:
-        """
-        Ejecuta el agente con una query
-        
-        Args:
-            query: Query del usuario
-        
-        Returns:
-            dict: Respuesta del agente
-        """
+        """Ejecuta el agente con una query"""
         try:
-            logger.info(f"Ejecutando agente con query: {query[:50]}")
+            logger.info(f"\n{'=' * 60}")
+            logger.info(f"EJECUTANDO AGENTE: {query[:50]}...")
+            logger.info(f"{'=' * 60}")
             
-            # Estado inicial
             initial_state = {
                 "query": query,
-                "query_embedding": None,
+                "prepared_query": "",
+                "query_analysis": {},
                 "retrieved_documents": [],
                 "llm_response": "",
+                "citations": [],
+                "reasoning_steps": [],
                 "final_response": {}
             }
             
-            # Ejecutar el grafo
             result = self.graph.invoke(initial_state)
             
-            logger.info("Ejecución del agente completada")
+            logger.info("✓ Ejecución completada")
             
             return {
                 "status": "success",
@@ -97,42 +82,13 @@ class AgentStateGraph:
                 "query": query,
                 "error": str(e)
             }
-    
-    def get_graph_info(self) -> dict:
-        """
-        Obtiene información sobre el grafo
-        
-        Returns:
-            dict: Información del grafo
-        """
-        try:
-            return {
-                "nodes": ["query_node", "retrieve_node", "reason_node", "format_node"],
-                "edges": [
-                    ("START", "query_node"),
-                    ("query_node", "retrieve_node"),
-                    ("retrieve_node", "reason_node"),
-                    ("reason_node", "format_node"),
-                    ("format_node", "END")
-                ],
-                "compiled": True
-            }
-        except Exception as e:
-            logger.error(f"Error al obtener info del grafo: {e}")
-            return {"error": str(e)}
 
 
-# Instancia global del agente
 _agent = None
 
 
 def get_agent() -> AgentStateGraph:
-    """
-    Obtiene la instancia global del agente
-    
-    Returns:
-        AgentStateGraph: Instancia del agente
-    """
+    """Obtiene la instancia global del agente"""
     global _agent
     if _agent is None:
         _agent = AgentStateGraph()
@@ -140,14 +96,6 @@ def get_agent() -> AgentStateGraph:
 
 
 def run_agent_query(query: str) -> Dict[str, Any]:
-    """
-    Ejecuta una query en el agente
-    
-    Args:
-        query: Query del usuario
-    
-    Returns:
-        dict: Respuesta del agente
-    """
+    """Ejecuta una query en el agente"""
     agent = get_agent()
     return agent.execute(query)

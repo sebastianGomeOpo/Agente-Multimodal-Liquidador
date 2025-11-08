@@ -1,291 +1,313 @@
 """
-multimodal_indexer.py - Indexador multimodal (CLIP + ChromaDB)
+multimodal_indexer.py - Indexador multimodal con IDs estables
 """
 
-import hashlib
-from typing import List, Dict, Any, Sequence, Optional
+from typing import List, Dict, Any, Optional
 
 from src.utils.logger import get_logger
-from src.utils.config import CHROMA_COLLECTION_NAME
-from .chroma_manager import ChromaManager
-from ..embeddings.clip_encoder import CLIPEncoder  # Import corregido (mayúsculas)
+from src.utils.config import CHROMA_COLLECTION_NAME, EMBEDDING_DIMENSION
+from src.vectorstore.chroma_manager import get_chroma_manager
+from src.embeddings.clip_encoder import CLIPEncoder
+from src.data_models import EmbeddingRecord, IndexingResult, RetrievalResult
 
 logger = get_logger(__name__)
 
 
 class MultimodalIndexer:
     """
-    Gestiona la indexación de embeddings multimodales (texto e imagen) en ChromaDB.
-    Expone una API compatible con el pipeline actual:
-      - index_batch(records)  donde records = [{embedding, document, metadata}, ...]
-      - index_batch(embeddings, documents, metadatas)  (modo tradicional)
-      - get_collection_stats()
-      - semantic_search(query_text, ...)
-      - search_by_embedding(embedding, ...)  (wrapper útil)
+    Gestiona la indexación y búsqueda de embeddings multimodales en ChromaDB.
+    
+    RESPONSABILIDADES:
+    - Generar IDs estables basados en fuente + tipo + chunk/page
+    - Indexar registros en formato EmbeddingRecord
+    - Búsqueda semántica con filtros por tipo
     """
-
+    
     def __init__(self, collection_name: str = CHROMA_COLLECTION_NAME):
-        self.manager = ChromaManager(collection_name=collection_name)
-        self.collection = self.manager.collection
+        """Inicializa el indexador con la colección de ChromaDB"""
         try:
-            self.encoder = CLIPEncoder()
+            self.manager = get_chroma_manager()
+            self.collection = self.manager.get_collection()
+            self.encoder = CLIPEncoder()  # Singleton
+            logger.info(f"✓ MultimodalIndexer inicializado con colección '{collection_name}'")
         except Exception as e:
-            logger.error(f"Error al inicializar CLIPEncoder: {e}")
-            self.encoder = None
-
-    # --------------------------
-    # Helpers
-    # --------------------------
-    def _generate_unique_id(self, metadata: Dict[str, Any], document: Optional[str] = None) -> str:
+            logger.error(f"Error inicializando MultimodalIndexer: {e}")
+            raise
+    
+    def _generate_stable_id(self, metadata: Dict[str, Any]) -> str:
         """
-        Genera un ID único para un documento basado en sus metadatos.
-        Mantiene IDs legibles para los tipos esperados y un fallback robusto.
+        Genera un ID estable basado SOLO en atributos inmutables.
+        
+        FORMATO:
+        - excel_image: excel_{source_file}_{chunk}
+        - pdf: pdf_{source_file}_p{page}
+        - text: text_{source_file}
+        
+        Args:
+            metadata: Metadatos del documento
+        
+        Returns:
+            str: ID único y estable
         """
         doc_type = metadata.get("type", "unknown")
-        source = str(metadata.get("source_file", "unknown_source"))
-        # Normaliza el 'source' para evitar separadores problemáticos
-        source_norm = source.replace("\\", "/").split("/")[-1] or "unknown_source"
-
-        if doc_type == "pdf_image":
-            page = metadata.get("page", 0)
-            return f"pdf_{source_norm}_p{page}"
-
+        source_file = metadata.get("source_file", "unknown")
+        
+        # Limpiar nombre de archivo (quitar extensión, normalizar)
+        source_clean = source_file.replace(".xlsx", "").replace(".pdf", "").replace(".", "_")
+        
         if doc_type == "excel_image":
-            chunk = metadata.get("chunk", "c0")
-            return f"excel_{source_norm}_{chunk}"
-
-        if doc_type == "text":
-            doc_id = metadata.get("doc_id", "doc")
-            return f"text_{source_norm}_{doc_id}"
-
-        # Fallback: hash estable basado en metadatos clave + (opcionalmente) el contenido/document
-        key_parts = [
-            doc_type,
-            source_norm,
-            str(metadata.get("page", "")),
-            str(metadata.get("chunk", "")),
-            str(metadata.get("doc_id", "")),
-            str(metadata.get("hash", "")),
-            str(metadata.get("id", "")),
-        ]
-        # Evita depender de metadata['document']; usa 'document' explícito si se pasó
-        if document:
-            key_parts.append(str(document)[:256])  # limita el tamaño para evitar hashes enormes
-        key = "|".join(key_parts)
-        content_hash = hashlib.md5(key.encode("utf-8")).hexdigest()
-        return f"{doc_type}_{source_norm}_{content_hash[:8]}"
-
-    # --------------------------
-    # Indexación
-    # --------------------------
-    def index_document(self, embedding: Sequence[float], document: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
+            chunk = metadata.get("chunk", "r0_c0")
+            return f"excel_{source_clean}_{chunk}"
+        
+        elif doc_type == "pdf":
+            page = metadata.get("page", 0)
+            return f"pdf_{source_clean}_p{page}"
+        
+        elif doc_type == "text":
+            return f"text_{source_clean}"
+        
+        else:
+            # Fallback (no debería usarse)
+            return f"{doc_type}_{source_clean}"
+    
+    def index_batch(self, records: List[EmbeddingRecord]) -> IndexingResult:
         """
-        Indexa un único documento (texto o imagen) en ChromaDB.
+        Indexa un lote de registros en ChromaDB.
+        
+        Args:
+            records: Lista de EmbeddingRecord
+        
+        Returns:
+            IndexingResult: Resultado de la indexación
         """
-        try:
-            doc_id = self._generate_unique_id(metadata, document)
-            self.collection.add(
-                ids=[doc_id],
-                embeddings=[list(embedding)],
-                documents=[document],
-                metadatas=[metadata],
-            )
-            logger.info(f"Documento indexado con ID: {doc_id}")
-            return {"status": "success", "indexed": 1, "ids": [doc_id]}
-        except Exception as e:
-            logger.error(f"Error al indexar documento {metadata.get('source_file')}: {e}")
-            return {"status": "error", "error": str(e), "indexed": 0}
-
-    def index_batch(self, *args, **kwargs) -> Dict[str, Any]:
-        """
-        Modos soportados:
-          1) index_batch(records)
-             records = [
-               {"embedding": [...], "document": "...", "metadata": {...}},
-               ...
-             ]
-          2) index_batch(embeddings, documents, metadatas)
-        """
-        # Modo 1: lista de dicts
-        if len(args) == 1 and isinstance(args[0], list):
-            records = args[0]
-            if records and isinstance(records[0], dict):
-                try:
-                    embeddings = []
-                    documents = []
-                    metadatas = []
-                    for r in records:
-                        emb = r.get("embedding")
-                        doc = r.get("document")
-                        meta = r.get("metadata")
-                        if emb is None or doc is None or meta is None:
-                            logger.warning("Registro inválido en index_batch; se requieren 'embedding', 'document' y 'metadata'. Saltando.")
-                            continue
-                        embeddings.append(list(emb))
-                        documents.append(doc)
-                        metadatas.append(meta)
-                    return self._index_batch_triples(embeddings, documents, metadatas)
-                except Exception as e:
-                    logger.error(f"Error procesando records en index_batch: {e}")
-                    return {"status": "error", "error": str(e), "indexed": 0}
-
-        # Modo 2: tres listas paralelas
-        if len(args) == 3:
-            embeddings, documents, metadatas = args
-            return self._index_batch_triples(embeddings, documents, metadatas)
-
-        raise TypeError(
-            "index_batch espera (records:list[dict]) o (embeddings, documents, metadatas)."
-        )
-
-    def _index_batch_triples(
-        self,
-        embeddings: Sequence[Sequence[float]],
-        documents: Sequence[str],
-        metadatas: Sequence[Dict[str, Any]],
-    ) -> Dict[str, Any]:
+        if not records:
+            logger.warning("No hay registros para indexar")
+            return IndexingResult(status="warning", indexed=0)
+        
         ids: List[str] = []
-        valid_embeddings: List[List[float]] = []
-        valid_documents: List[str] = []
-        valid_metadatas: List[Dict[str, Any]] = []
-
-        try:
-            for emb, doc, meta in zip(embeddings, documents, metadatas):
-                try:
-                    # Preserva 'type' específico (excel_image/pdf_image/text); no sobrescribir con 'image'
-                    doc_id = self._generate_unique_id(meta, doc)
-                    ids.append(doc_id)
-                    valid_embeddings.append(list(emb))
-                    valid_documents.append(doc)
-                    valid_metadatas.append(meta)
-                except Exception as inner_e:
-                    logger.warning(
-                        f"Error procesando documento para batch {meta.get('source_file')}: {inner_e}. Saltando."
-                    )
-        except Exception as e:
-            logger.error(f"Error preparando lote para indexación: {e}")
-            return {"status": "error", "error": str(e), "indexed": 0}
-
+        embeddings: List[List[float]] = []
+        documents: List[str] = []
+        metadatas: List[Dict[str, Any]] = []
+        errors: List[str] = []
+        
+        logger.info(f"Indexando {len(records)} registros...")
+        
+        for record in records:
+            try:
+                # Validar dimensión del embedding
+                if len(record.embedding) != EMBEDDING_DIMENSION:
+                    error_msg = f"Dimensión incorrecta: {len(record.embedding)} != {EMBEDDING_DIMENSION}"
+                    logger.error(error_msg)
+                    errors.append(error_msg)
+                    continue
+                
+                # Generar ID estable
+                doc_id = self._generate_stable_id(record.metadata)
+                
+                ids.append(doc_id)
+                embeddings.append(record.embedding)
+                documents.append(record.document)
+                metadatas.append(record.metadata)
+            
+            except Exception as e:
+                error_msg = f"Error procesando registro: {e}"
+                logger.error(error_msg)
+                errors.append(error_msg)
+        
         if not ids:
-            logger.warning("No hay documentos válidos para indexar en el lote.")
-            return {"status": "warning", "indexed": 0}
-
+            logger.error("Ningún registro válido para indexar")
+            return IndexingResult(status="error", indexed=0, errors=errors)
+        
+        # Indexar en ChromaDB
         try:
             self.collection.add(
                 ids=ids,
-                embeddings=valid_embeddings,
-                documents=valid_documents,
-                metadatas=valid_metadatas,
+                embeddings=embeddings,
+                documents=documents,
+                metadatas=metadatas
             )
-            logger.info(f"Lote de {len(ids)} documentos indexados exitosamente.")
-            return {"status": "success", "indexed": len(ids), "ids": ids}
+            logger.info(f"✓ {len(ids)} registros indexados exitosamente")
+            
+            return IndexingResult(
+                status="success",
+                indexed=len(ids),
+                ids=ids,
+                errors=errors
+            )
+        
         except Exception as e:
-            logger.error(f"Error al indexar lote en ChromaDB: {e}")
-            return {"status": "error", "error": str(e), "indexed": 0}
-
-    # --------------------------
-    # Búsqueda
-    # --------------------------
-    def semantic_search(self, query_text: str, n_results: int = 5, doc_type: str = "all") -> Dict[str, Any]:
+            logger.error(f"Error indexando en ChromaDB: {e}")
+            return IndexingResult(
+                status="error",
+                indexed=0,
+                errors=errors + [str(e)]
+            )
+    
+    def semantic_search(
+        self,
+        query_text: str,
+        n_results: int = 5,
+        doc_type: Optional[str] = None,
+        min_similarity: float = 0.0
+    ) -> List[RetrievalResult]:
         """
-        Realiza una búsqueda semántica usando un embedding de texto.
-        Devuelve {"documents": [{id, distance, metadata, document}, ...]}
+        Búsqueda semántica usando un texto de consulta.
+        
+        Args:
+            query_text: Texto de la consulta
+            n_results: Número máximo de resultados
+            doc_type: Filtrar por tipo ("excel_image", "pdf", "text", None=todos)
+            min_similarity: Similitud mínima (0-1)
+        
+        Returns:
+            List[RetrievalResult]: Documentos recuperados
         """
-        if not self.encoder:
-            logger.error("Encoder no inicializado. No se puede realizar la búsqueda.")
-            return {"documents": []}
-
         try:
+            # Generar embedding de la query
             query_embedding = self.encoder.encode_text(query_text)
             if query_embedding is None:
-                logger.error("No se pudo generar embedding para la query.")
-                return {"documents": []}
-
-            where_clause = {}
-            if doc_type != "all":
-                where_clause = {"type": doc_type}
-
-            results = self.collection.query(
-                query_embeddings=[query_embedding.tolist()],
+                logger.error("No se pudo generar embedding para la query")
+                return []
+            
+            return self.search_by_embedding(
+                embedding=query_embedding.tolist(),
                 n_results=n_results,
-                where=where_clause,
-                include=["metadatas", "documents", "distances", "ids"],
+                doc_type=doc_type,
+                min_similarity=min_similarity
             )
-
-            formatted_docs: List[Dict[str, Any]] = []
-            if results and results.get("ids"):
-                ids_list = results.get("ids", [[]])[0]
-                distances_list = results.get("distances", [[]])[0]
-                metadatas_list = results.get("metadatas", [[]])[0]
-                documents_list = results.get("documents", [[]])[0]
-
-                for i in range(len(ids_list)):
-                    formatted_docs.append(
-                        {
-                            "id": ids_list[i],
-                            "distance": distances_list[i],
-                            "metadata": metadatas_list[i],
-                            "document": documents_list[i],
-                        }
-                    )
-
-            logger.info(f"Búsqueda semántica devolvió {len(formatted_docs)} resultados.")
-            return {"documents": formatted_docs}
+        
         except Exception as e:
-            logger.error(f"Error durante la búsqueda semántica: {e}")
-            return {"documents": []}
-
+            logger.error(f"Error en búsqueda semántica: {e}")
+            return []
+    
     def search_by_embedding(
         self,
-        embedding: Sequence[float],
+        embedding: List[float],
         n_results: int = 5,
-        where: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
+        doc_type: Optional[str] = None,
+        min_similarity: float = 0.0
+    ) -> List[RetrievalResult]:
         """
-        Búsqueda directa por embedding ya calculado (útil como wrapper).
-        Devuelve {"documents": [{id, distance, metadata, document}, ...]}
+        Búsqueda directa usando un embedding ya calculado.
+        
+        Args:
+            embedding: Vector de embedding
+            n_results: Número máximo de resultados
+            doc_type: Filtrar por tipo
+            min_similarity: Similitud mínima (0-1)
+        
+        Returns:
+            List[RetrievalResult]: Documentos recuperados ordenados por similitud
         """
         try:
+            # Construir filtro where si se especifica tipo
+            where_clause = {"type": doc_type} if doc_type else None
+            
+            # Realizar búsqueda
             results = self.collection.query(
-                query_embeddings=[list(embedding)],
+                query_embeddings=[embedding],
                 n_results=n_results,
-                where=where or {},
-                include=["metadatas", "documents", "distances", "ids"],
+                where=where_clause,
+                include=["metadatas", "documents", "distances"]
             )
-
-            formatted_docs: List[Dict[str, Any]] = []
+            
+            # Formatear resultados
+            retrieved: List[RetrievalResult] = []
+            
             if results and results.get("ids"):
-                ids_list = results.get("ids", [[]])[0]
-                distances_list = results.get("distances", [[]])[0]
-                metadatas_list = results.get("metadatas", [[]])[0]
-                documents_list = results.get("documents", [[]])[0]
-
+                ids_list = results["ids"][0]
+                distances_list = results["distances"][0]
+                metadatas_list = results["metadatas"][0]
+                documents_list = results["documents"][0]
+                
                 for i in range(len(ids_list)):
-                    formatted_docs.append(
-                        {
-                            "id": ids_list[i],
-                            "distance": distances_list[i],
-                            "metadata": metadatas_list[i],
-                            "document": documents_list[i],
-                        }
-                    )
-
-            logger.info(f"Búsqueda por embedding devolvió {len(formatted_docs)} resultados.")
-            return {"documents": formatted_docs}
+                    distance = distances_list[i]
+                    similarity = max(0.0, 1.0 - distance)  # Convertir distancia a similitud
+                    
+                    # Filtrar por similitud mínima
+                    if similarity < min_similarity:
+                        continue
+                    
+                    retrieved.append(RetrievalResult(
+                        id=ids_list[i],
+                        distance=distance,
+                        similarity=similarity,
+                        metadata=metadatas_list[i],
+                        document=documents_list[i]
+                    ))
+            
+            logger.info(f"✓ Búsqueda devolvió {len(retrieved)} resultados")
+            return retrieved
+        
         except Exception as e:
-            logger.error(f"Error durante la búsqueda por embedding: {e}")
-            return {"documents": []}
-
-    # --------------------------
-    # Estadísticas
-    # --------------------------
+            logger.error(f"Error en búsqueda por embedding: {e}")
+            return []
+    
     def get_collection_stats(self) -> Dict[str, Any]:
-        """
-        Obtiene estadísticas de la colección (conteo de ítems).
-        Reutiliza el método del ChromaManager.
-        """
+        """Obtiene estadísticas de la colección"""
         try:
-            return self.manager.get_collection_status()
+            count = self.collection.count()
+            return {
+                "status": "success",
+                "item_count": count,
+                "collection_name": self.manager.collection_name
+            }
         except Exception as e:
-            logger.error(f"Error al obtener estadísticas de la colección: {e}")
-            return {"error": str(e), "item_count": 0}
+            logger.error(f"Error obteniendo estadísticas: {e}")
+            return {"status": "error", "error": str(e), "item_count": 0}
+
+
+def index_all_embeddings() -> IndexingResult:
+    """
+    PASO 6: Indexa todos los embeddings generados en el Paso 5.
+    
+    Returns:
+        IndexingResult: Resultado consolidado de la indexación
+    """
+    logger.info("=" * 60)
+    logger.info("PASO 6: Indexando embeddings en ChromaDB")
+    logger.info("=" * 60)
+    
+    from pathlib import Path
+    import json
+    from src.utils.config import EMBEDDINGS_DIR
+    
+    indexer = MultimodalIndexer()
+    
+    all_records: List[EmbeddingRecord] = []
+    
+    # Cargar embeddings de imágenes
+    image_file = EMBEDDINGS_DIR / "image_embeddings.json"
+    if image_file.exists():
+        with open(image_file, 'r', encoding='utf-8') as f:
+            image_data = json.load(f)
+            all_records.extend([EmbeddingRecord(**record) for record in image_data])
+        logger.info(f"✓ Cargados {len(image_data)} embeddings de imágenes")
+    else:
+        logger.warning(f"No se encontró: {image_file}")
+    
+    # Cargar embeddings de texto
+    text_file = EMBEDDINGS_DIR / "text_embeddings.json"
+    if text_file.exists():
+        with open(text_file, 'r', encoding='utf-8') as f:
+            text_data = json.load(f)
+            all_records.extend([EmbeddingRecord(**record) for record in text_data])
+        logger.info(f"✓ Cargados {len(text_data)} embeddings de texto")
+    else:
+        logger.warning(f"No se encontró: {text_file}")
+    
+    if not all_records:
+        logger.warning("No hay embeddings para indexar")
+        return IndexingResult(status="warning", indexed=0)
+    
+    # Indexar todo en un lote
+    logger.info(f"\nIndexando {len(all_records)} registros totales...")
+    result = indexer.index_batch(all_records)
+    
+    logger.info("\n" + "=" * 60)
+    logger.info(f"✓ PASO 6 COMPLETADO")
+    logger.info(f"  - Indexados: {result.indexed}")
+    logger.info(f"  - Errores: {len(result.errors)}")
+    logger.info("=" * 60)
+    
+    return result

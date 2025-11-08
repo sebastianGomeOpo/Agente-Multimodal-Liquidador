@@ -549,3 +549,226 @@ resumen_financiero
 2025-11-08 15:22:44,697 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
 2025-11-08 15:22:49,268 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
 2025-11-08 15:22:49,420 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 15:24:27,879 - src.extractors.ocr_extractor - INFO - Iniciando PASO 3: Extracción de Markdown (ADE) de todos los documentos...
+2025-11-08 15:24:27,881 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-08 15:24:27,883 - src.extractors.ocr_extractor - INFO - Se encontraron 1 PDFs originales para procesar.
+2025-11-08 15:24:27,885 - src.extractors.ocr_extractor - INFO - Se encontraron 8 imágenes de Excel para procesar.
+2025-11-08 15:24:27,887 - src.extractors.ocr_extractor - INFO - Se procesarán 9 documentos en total.
+2025-11-08 15:24:27,888 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 15:24:38,422 - src.extractors.ocr_extractor - INFO - ADE (PDF) completado para: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 15:24:38,447 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_text.json
+2025-11-08 15:24:38,453 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 15:25:15,389 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 15:25:15,521 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0_text.json
+2025-11-08 15:25:15,523 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 15:25:32,957 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 15:25:32,977 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200_text.json
+2025-11-08 15:25:32,985 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 15:25:45,135 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 15:25:45,228 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250_text.json
+2025-11-08 15:25:45,235 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 15:26:24,574 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 15:26:24,700 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0_text.json
+2025-11-08 15:26:24,701 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 15:26:47,512 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 15:26:47,612 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0_text.json
+2025-11-08 15:26:47,613 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 15:27:25,968 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 15:27:26,238 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0_text.json
+2025-11-08 15:27:26,241 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 15:27:47,981 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 15:27:47,999 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200_text.json
+2025-11-08 15:27:48,006 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 15:28:00,039 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 15:28:00,142 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250_text.json
+2025-11-08 15:28:00,146 - src.extractors.ocr_extractor - INFO - Extracción de Markdown completada. 9 archivos procesados.
+2025-11-08 15:28:01,935 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: OperacionNave
+2025-11-08 15:28:01,937 - src.extractors.structure_parser - INFO - Se encontraron 9 archivos de Markdown para parsear.
+2025-11-08 15:28:01,983 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:28:12,959 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:28:12,963 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0_structure.json
+2025-11-08 15:28:12,987 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:28:39,501 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:28:39,504 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200_structure.json
+2025-11-08 15:28:39,529 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:28:49,635 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:28:49,638 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250_structure.json
+2025-11-08 15:28:49,707 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:28:58,764 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:28:58,769 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0_structure.json
+2025-11-08 15:28:58,831 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:29:09,616 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:29:09,625 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0_structure.json
+2025-11-08 15:29:09,742 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:29:20,115 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:29:20,130 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0_structure.json
+2025-11-08 15:29:20,186 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:29:30,094 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:29:30,103 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200_structure.json
+2025-11-08 15:29:30,168 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:29:45,048 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:29:45,051 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250_structure.json
+2025-11-08 15:29:45,068 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:29:53,173 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:29:53,187 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_structure.json
+2025-11-08 15:29:53,196 - src.extractors.structure_parser - INFO - Parseo completado: 9 archivos procesados.
+2025-11-08 15:30:05,341 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 15:30:05,342 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 15:30:10,575 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 15:30:10,577 - src.embeddings.clip_encoder - INFO - Procesando 8 imágenes totales (solo Excel)
+2025-11-08 15:30:10,578 - src.embeddings.clip_encoder - INFO - Batch encoding de 8 imágenes
+2025-11-08 15:30:10,580 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 15:30:11,438 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:30:11,452 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 15:30:12,272 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:30:12,284 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 15:30:12,574 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:30:12,578 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 15:30:13,344 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:30:13,357 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 15:30:13,909 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:30:13,917 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 15:30:14,676 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:30:14,690 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 15:30:15,472 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:30:15,486 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 15:30:15,774 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:30:15,807 - src.embeddings.clip_encoder - INFO - Procesando 9 textos (desde JSON estructurados)
+2025-11-08 15:30:15,810 - src.embeddings.clip_encoder - INFO - Batch encoding de 9 textos
+2025-11-08 15:30:15,811 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,819 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,821 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,824 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,826 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,829 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,831 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,834 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,836 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,839 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,840 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,843 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,844 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,847 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,848 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,851 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,853 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"recalada": null, "nave_nombre": null, "fecha_ini
+2025-11-08 15:30:15,856 - src.embeddings.clip_encoder - ERROR - Error al codificar texto: Sequence length must be less than max_position_embeddings (got `sequence length`: 125 and max_position_embeddings: 77
+2025-11-08 15:30:15,867 - src.embeddings.clip_encoder - INFO - Embeddings guardados: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\embeddings\image_embeddings.json
+2025-11-08 15:30:15,870 - src.embeddings.clip_encoder - INFO - Embeddings guardados: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\embeddings\text_embeddings.json
+2025-11-08 16:15:25,485 - __main__ - INFO - ============================================================
+2025-11-08 16:15:25,486 - __main__ - INFO - INICIANDO MODO INDEXACIÓN
+2025-11-08 16:15:25,486 - __main__ - INFO - ============================================================
+2025-11-08 16:15:25,486 - __main__ - INFO - 
+[PASO 1] Convirtiendo Excel a imágenes...
+2025-11-08 16:16:08,099 - __main__ - INFO - 
+[PASO 3] Extrayendo Markdown con API ADE...
+2025-11-08 16:16:08,099 - src.extractors.ocr_extractor - INFO - Iniciando PASO 3: Extracción de Markdown (ADE) de todos los documentos...
+2025-11-08 16:16:08,100 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-08 16:16:08,100 - src.extractors.ocr_extractor - INFO - Se encontraron 1 PDFs originales para procesar.
+2025-11-08 16:16:08,101 - src.extractors.ocr_extractor - INFO - Se encontraron 8 imágenes de Excel para procesar.
+2025-11-08 16:16:08,101 - src.extractors.ocr_extractor - INFO - Se procesarán 9 documentos en total.
+2025-11-08 16:16:08,102 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 16:16:18,958 - src.extractors.ocr_extractor - INFO - ADE (PDF) completado para: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 16:16:18,976 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_text.json
+2025-11-08 16:16:18,977 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 16:16:57,592 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 16:16:57,745 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0_text.json
+2025-11-08 16:16:57,745 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 16:17:19,082 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 16:17:19,092 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200_text.json
+2025-11-08 16:17:19,093 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 16:17:35,415 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 16:17:35,510 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250_text.json
+2025-11-08 16:17:35,511 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 16:18:13,602 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 16:18:13,732 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0_text.json
+2025-11-08 16:18:13,732 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 16:18:36,762 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 16:18:36,880 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0_text.json
+2025-11-08 16:18:36,881 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 16:19:14,387 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 16:19:14,927 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0_text.json
+2025-11-08 16:19:14,928 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 16:19:31,868 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 16:19:31,873 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200_text.json
+2025-11-08 16:19:31,873 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 16:19:44,693 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 16:19:44,722 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250_text.json
+2025-11-08 16:19:44,722 - src.extractors.ocr_extractor - INFO - Extracción de Markdown completada. 9 archivos procesados.
+2025-11-08 16:19:44,725 - __main__ - INFO - 
+[PASO 4] Convirtiendo Markdown a JSON estructurado...
+2025-11-08 16:19:46,400 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: OperacionNave
+2025-11-08 16:19:46,401 - src.extractors.structure_parser - INFO - Se encontraron 9 archivos de Markdown para parsear.
+2025-11-08 16:19:46,441 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:19:55,305 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:19:55,307 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0_structure.json
+2025-11-08 16:19:55,328 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:20:09,044 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:20:09,045 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200_structure.json
+2025-11-08 16:20:09,068 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:20:21,241 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:20:21,242 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250_structure.json
+2025-11-08 16:20:21,285 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:20:28,134 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:20:28,137 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0_structure.json
+2025-11-08 16:20:28,208 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:20:35,916 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:20:35,918 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0_structure.json
+2025-11-08 16:20:35,995 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:20:45,106 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:20:45,108 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0_structure.json
+2025-11-08 16:20:45,134 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:20:54,544 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:20:54,545 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200_structure.json
+2025-11-08 16:20:54,566 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:21:00,507 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:21:00,510 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250_structure.json
+2025-11-08 16:21:00,556 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 16:21:08,331 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 16:21:08,335 - src.extractors.structure_parser - INFO - JSON (OperacionNave) guardado en: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_structure.json
+2025-11-08 16:21:08,336 - src.extractors.structure_parser - INFO - Parseo completado: 9 archivos procesados.
+2025-11-08 16:21:08,346 - __main__ - INFO - 
+[PASO 5] Generando embeddings multimodales...
+2025-11-08 16:21:08,347 - src.embeddings.embedding_pipeline - INFO - ============================================================
+2025-11-08 16:21:08,348 - src.embeddings.embedding_pipeline - INFO - PASO 5: Generando embeddings multimodales
+2025-11-08 16:21:08,349 - src.embeddings.embedding_pipeline - INFO - ============================================================
+2025-11-08 16:21:08,350 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 16:21:08,351 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 16:21:13,367 - src.embeddings.embedding_pipeline - INFO - 
+[Paso 5.1] Procesando imágenes de Excel...
+2025-11-08 16:21:13,367 - src.embeddings.embedding_pipeline - INFO - Encontradas 8 imágenes de Excel
+2025-11-08 16:21:18,099 - src.embeddings.embedding_pipeline - INFO - 
+[Paso 5.2] Procesando textos estructurados...
+2025-11-08 16:21:18,100 - src.embeddings.embedding_pipeline - INFO - Encontrados 9 archivos JSON estructurados
+2025-11-08 16:21:18,113 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0_structure.json, saltando
+2025-11-08 16:21:18,115 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200_structure.json, saltando
+2025-11-08 16:21:18,117 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250_structure.json, saltando
+2025-11-08 16:21:18,118 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0_structure.json, saltando
+2025-11-08 16:21:18,120 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0_structure.json, saltando
+2025-11-08 16:21:18,122 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0_structure.json, saltando
+2025-11-08 16:21:18,124 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200_structure.json, saltando
+2025-11-08 16:21:18,126 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250_structure.json, saltando
+2025-11-08 16:21:18,128 - src.embeddings.embedding_pipeline - WARNING - Documento vacío en 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_structure.json, saltando
+2025-11-08 16:21:18,134 - src.embeddings.embedding_pipeline - INFO - 
+============================================================
+2025-11-08 16:21:18,137 - src.embeddings.embedding_pipeline - INFO -   - Imágenes: 8
+2025-11-08 16:21:18,137 - src.embeddings.embedding_pipeline - INFO -   - Textos: 0
+2025-11-08 16:21:18,137 - src.embeddings.embedding_pipeline - INFO -   - Total: 8
+2025-11-08 16:21:18,137 - src.embeddings.embedding_pipeline - INFO - ============================================================
+2025-11-08 16:21:18,141 - __main__ - INFO - 
+[PASO 6] Indexando en ChromaDB...
+2025-11-08 16:21:18,141 - src.vectorstore.multimodal_indexer - INFO - ============================================================
+2025-11-08 16:21:18,142 - src.vectorstore.multimodal_indexer - INFO - PASO 6: Indexando embeddings en ChromaDB
+2025-11-08 16:21:18,142 - src.vectorstore.multimodal_indexer - INFO - ============================================================
+2025-11-08 16:21:18,802 - src.vectorstore.multimodal_indexer - INFO - 
+Indexando 8 registros totales...
+2025-11-08 16:21:18,803 - src.vectorstore.multimodal_indexer - INFO - Indexando 8 registros...
+2025-11-08 16:21:18,952 - src.vectorstore.multimodal_indexer - INFO - 
+============================================================
+2025-11-08 16:21:18,958 - src.vectorstore.multimodal_indexer - INFO -   - Indexados: 8
+2025-11-08 16:21:18,958 - src.vectorstore.multimodal_indexer - INFO -   - Errores: 0
+2025-11-08 16:21:18,959 - src.vectorstore.multimodal_indexer - INFO - ============================================================
+2025-11-08 16:21:18,977 - __main__ - INFO - 
+============================================================
+2025-11-08 16:21:18,981 - __main__ - INFO -   Total en ChromaDB: 8 documentos
+2025-11-08 16:21:18,982 - __main__ - INFO - ============================================================
