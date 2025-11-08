@@ -426,3 +426,126 @@ resumen_financiero
 2025-11-08 11:50:57,192 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
 2025-11-08 11:50:57,217 - src.embeddings.clip_encoder - INFO - Embeddings guardados: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\embeddings\image_embeddings.json
 2025-11-08 11:50:57,235 - src.embeddings.clip_encoder - INFO - Embeddings guardados: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\embeddings\text_embeddings.json
+2025-11-08 12:13:26,186 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:13:26,188 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:13:32,397 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:13:33,139 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:13:33,140 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:13:36,472 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:13:45,054 - src.agent.graph_agent - INFO - Inicializando AgentStateGraph
+2025-11-08 12:13:45,065 - src.agent.graph_agent - INFO - Grafo compilado con éxito
+2025-11-08 12:13:45,067 - src.agent.graph_agent - INFO - Grafo inicializado exitosamente
+2025-11-08 12:13:45,068 - src.agent.graph_agent - INFO - Ejecutando agente con query: ¿Cuál es el monto total de la liquidación para el 
+2025-11-08 12:13:45,071 - src.agent.nodes - INFO - Query node - Query: ¿Cuál es el monto total de la liquidación para el 
+2025-11-08 12:13:45,073 - src.agent.nodes - INFO - Query preparada: ¿Cuál es el monto total de la liquidación para el lote 25105?
+2025-11-08 12:13:45,075 - src.agent.nodes - INFO - Retrieve node - Buscando documentos
+2025-11-08 12:13:45,077 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:13:45,080 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:13:48,193 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:13:48,195 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:13:48,196 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:13:51,450 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:13:51,454 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): ¿Cuál es el monto total de la liquidación para el 
+2025-11-08 12:13:51,526 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 12:13:51,529 - src.agent.nodes - ERROR - Error durante retrieval: 'MultimodalIndexer' object has no attribute 'search_by_embedding'
+2025-11-08 12:13:51,548 - src.agent.nodes - INFO - Reason node - Razonando con LLM
+2025-11-08 12:13:51,550 - src.agent.nodes - WARNING - No hay documentos para razonar
+2025-11-08 12:13:51,553 - src.agent.nodes - INFO - Format node - Formateando respuesta
+2025-11-08 12:13:51,556 - src.agent.nodes - INFO - Respuesta formateada
+2025-11-08 12:13:51,559 - src.agent.graph_agent - INFO - Ejecución del agente completada
+2025-11-08 12:14:08,958 - src.agent.graph_agent - INFO - Ejecutando agente con query: ¿Cuál es el tonelaje para el lote 25105?
+2025-11-08 12:14:08,967 - src.agent.nodes - INFO - Query node - Query: ¿Cuál es el tonelaje para el lote 25105?
+2025-11-08 12:14:08,972 - src.agent.nodes - INFO - Query preparada: ¿Cuál es el tonelaje para el lote 25105?
+2025-11-08 12:14:08,978 - src.agent.nodes - INFO - Retrieve node - Buscando documentos
+2025-11-08 12:14:08,982 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:14:08,986 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:14:12,444 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:14:12,447 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:14:12,449 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:14:15,827 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:14:15,831 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): ¿Cuál es el tonelaje para el lote 25105?
+2025-11-08 12:14:15,896 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 12:14:15,898 - src.agent.nodes - ERROR - Error durante retrieval: 'MultimodalIndexer' object has no attribute 'search_by_embedding'
+2025-11-08 12:14:15,918 - src.agent.nodes - INFO - Reason node - Razonando con LLM
+2025-11-08 12:14:15,922 - src.agent.nodes - WARNING - No hay documentos para razonar
+2025-11-08 12:14:15,925 - src.agent.nodes - INFO - Format node - Formateando respuesta
+2025-11-08 12:14:15,927 - src.agent.nodes - INFO - Respuesta formateada
+2025-11-08 12:14:15,930 - src.agent.graph_agent - INFO - Ejecución del agente completada
+2025-11-08 12:25:31,660 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:25:31,666 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:25:37,105 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:27:49,990 - src.agent.graph_agent - INFO - Inicializando AgentStateGraph
+2025-11-08 12:27:50,029 - src.agent.graph_agent - INFO - Grafo compilado con éxito
+2025-11-08 12:27:50,036 - src.agent.graph_agent - INFO - Grafo inicializado exitosamente
+2025-11-08 12:27:50,041 - src.agent.graph_agent - INFO - Ejecutando agente con query: ¿toda lainformación del lote 25105?
+2025-11-08 12:27:50,048 - src.agent.nodes - INFO - Query node - Query: ¿toda lainformación del lote 25105?
+2025-11-08 12:27:50,054 - src.agent.nodes - INFO - Query preparada: ¿toda lainformación del lote 25105?
+2025-11-08 12:27:50,061 - src.agent.nodes - INFO - Retrieve node - Buscando documentos
+2025-11-08 12:27:50,066 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:27:50,072 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:27:53,413 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:27:53,416 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:27:53,418 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:27:56,518 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:27:56,522 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): ¿toda lainformación del lote 25105?
+2025-11-08 12:27:56,582 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 12:27:56,584 - src.agent.nodes - ERROR - Error durante retrieval: 'MultimodalIndexer' object has no attribute 'search_by_embedding'
+2025-11-08 12:27:56,601 - src.agent.nodes - INFO - Reason node - Razonando con LLM
+2025-11-08 12:27:56,605 - src.agent.nodes - WARNING - No hay documentos para razonar
+2025-11-08 12:27:56,609 - src.agent.nodes - INFO - Format node - Formateando respuesta
+2025-11-08 12:27:56,611 - src.agent.nodes - INFO - Respuesta formateada
+2025-11-08 12:27:56,613 - src.agent.graph_agent - INFO - Ejecución del agente completada
+2025-11-08 12:28:03,970 - src.agent.graph_agent - INFO - Ejecutando agente con query: ¿Cuántas horas de 'TIEMPO MUERTO' se registraron e
+2025-11-08 12:28:03,974 - src.agent.nodes - INFO - Query node - Query: ¿Cuántas horas de 'TIEMPO MUERTO' se registraron e
+2025-11-08 12:28:03,976 - src.agent.nodes - INFO - Query preparada: ¿Cuántas horas de 'TIEMPO MUERTO' se registraron en total?
+2025-11-08 12:28:03,979 - src.agent.nodes - INFO - Retrieve node - Buscando documentos
+2025-11-08 12:28:03,985 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:28:03,987 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:28:07,365 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:28:07,368 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:28:07,369 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:28:10,688 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:28:10,692 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): ¿Cuántas horas de 'TIEMPO MUERTO' se registraron e
+2025-11-08 12:28:10,755 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 12:28:10,758 - src.agent.nodes - ERROR - Error durante retrieval: 'MultimodalIndexer' object has no attribute 'search_by_embedding'
+2025-11-08 12:28:10,777 - src.agent.nodes - INFO - Reason node - Razonando con LLM
+2025-11-08 12:28:10,780 - src.agent.nodes - WARNING - No hay documentos para razonar
+2025-11-08 12:28:10,782 - src.agent.nodes - INFO - Format node - Formateando respuesta
+2025-11-08 12:28:10,784 - src.agent.nodes - INFO - Respuesta formateada
+2025-11-08 12:28:10,786 - src.agent.graph_agent - INFO - Ejecución del agente completada
+2025-11-08 12:34:46,049 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:34:46,054 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:34:50,992 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:35:09,863 - src.agent.graph_agent - INFO - Inicializando AgentStateGraph
+2025-11-08 12:35:09,877 - src.agent.graph_agent - INFO - Grafo compilado con éxito
+2025-11-08 12:35:09,879 - src.agent.graph_agent - INFO - Grafo inicializado exitosamente
+2025-11-08 12:35:09,880 - src.agent.graph_agent - INFO - Ejecutando agente con query: ¿toda lainformación del lote 25105?
+2025-11-08 12:35:09,883 - src.agent.nodes - INFO - Query node - Query: ¿toda lainformación del lote 25105?
+2025-11-08 12:35:09,887 - src.agent.nodes - INFO - Query preparada: ¿toda lainformación del lote 25105?
+2025-11-08 12:35:09,889 - src.agent.nodes - INFO - Retrieve node - Buscando documentos
+2025-11-08 12:35:09,892 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 12:35:09,893 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 12:35:13,044 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 12:35:13,048 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): ¿toda lainformación del lote 25105?
+2025-11-08 12:35:13,202 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 12:35:13,212 - src.agent.nodes - INFO - Documentos recuperados: 0
+2025-11-08 12:35:13,231 - src.agent.nodes - INFO - Reason node - Razonando con LLM
+2025-11-08 12:35:13,233 - src.agent.nodes - WARNING - No hay documentos para razonar
+2025-11-08 12:35:13,236 - src.agent.nodes - INFO - Format node - Formateando respuesta
+2025-11-08 12:35:13,238 - src.agent.nodes - WARNING - Respuesta vacía o sin documentos.
+2025-11-08 12:35:13,240 - src.agent.nodes - INFO - Respuesta formateada
+2025-11-08 12:35:13,243 - src.agent.graph_agent - INFO - Ejecución del agente completada
+2025-11-08 15:00:41,620 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: LiquidacionData
+2025-11-08 15:12:59,379 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: OperacionNave
+2025-11-08 15:17:07,382 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: OperacionNave
+2025-11-08 15:17:07,399 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:17:18,961 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:18:35,844 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado (Markdown -> OperacionNave)...
+2025-11-08 15:18:46,442 - src.extractors.structure_parser - INFO - Parseo y normalización completados.
+2025-11-08 15:22:35,607 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 15:22:35,612 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 15:22:39,806 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 15:22:43,776 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 15:22:44,697 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 15:22:49,268 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 15:22:49,420 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)

@@ -8,20 +8,9 @@ from src.embeddings.clip_encoder import CLIPEncoder
 from src.vectorstore.multimodal_indexer import MultimodalIndexer
 # El bloque de importación de 'src.agent.tools' se ha eliminado
 # ya que estas funciones no se usan directamente en este archivo
-# y causan un ImportError.
+# y causaban un ImportError.
 
 logger = get_logger(__name__)
-
-
-class State:
-    """Estado del agente"""
-    def __init__(self):
-        self.query = ""
-        self.query_embedding = None
-        self.retrieved_documents = []
-        self.llm_response = ""
-        self.final_response = ""
-        self.metadata = {}
 
 
 def query_node(state: dict) -> dict:
@@ -89,13 +78,33 @@ def retrieve_node(state: dict) -> dict:
             
             state["query_embedding"] = query_embedding.tolist()
             
-            # Buscar en ChromaDB
-            search_results = indexer.search_by_embedding(query_embedding.tolist())
+            # --- Inicio del reemplazo de lógica en retrieve_node ---
+            query_results = indexer.manager.collection.query(
+                query_embeddings=[query_embedding.tolist()],
+                n_results=5,
+                include=["metadatas", "documents", "distances"]
+            )
             
-            retrieved_docs = search_results.get("documents", [])
+            retrieved_docs = []
+            
+            ids_list = query_results.get("ids", [[]])[0]
+            distances_list = query_results.get("distances", [[]])[0]
+            metadatas_list = query_results.get("metadatas", [[]])[0]
+            documents_list = query_results.get("documents", [[]])[0]
+            
+            for i in range(len(ids_list)):
+                retrieved_docs.append(
+                    {
+                        "id": ids_list[i],
+                        "distance": distances_list[i],
+                        "metadata": metadatas_list[i],
+                        "document": documents_list[i],
+                    }
+                )
+            
             logger.info(f"Documentos recuperados: {len(retrieved_docs)}")
-            
             state["retrieved_documents"] = retrieved_docs
+            # --- Fin del reemplazo de lógica ---
             
         except Exception as e:
             logger.error(f"Error durante retrieval: {e}")
@@ -131,14 +140,14 @@ def reason_node(state: dict) -> dict:
             return state
         
         # Construir contexto
-        context = self._build_context(documents)
+        context = _build_context(documents)
         
         # Aquí iría la llamada al LLM (OpenAI, DeepSeek, etc)
         # Por ahora, usamos una respuesta simulada
         
         logger.info("LLM processing simulado")
         
-        state["llm_response"] = self._process_with_llm(query, context)
+        state["llm_response"] = _process_with_llm(query, context)
         state["reasoning_complete"] = True
         
         return state
@@ -172,11 +181,11 @@ def format_node(state: dict) -> dict:
                 {
                     "id": doc.get("id"),
                     "type": doc.get("metadata", {}).get("type"),
-                    "confidence": 1.0 - doc.get("distance", 0)
+                    "confidence": 1.0 - doc.get("distance", 0),
                 }
                 for doc in documents
             ],
-            "query": state.get("query", "")
+            "query": state.get("query", ""),
         }
         
         # Validar calidad
@@ -184,7 +193,15 @@ def format_node(state: dict) -> dict:
             logger.warning("Respuesta vacía del LLM")
             final_response["quality_score"] = 0.0
         else:
-            final_response["quality_score"] = min(1.0, len(documents) * 0.3 + 0.7)
+            # Fórmula de ejemplo: 0.6 base + 0.1 por doc, max 1.0 (se satura con 4 docs)
+            base_score = 0.6
+            score_per_doc = 0.1
+            max_docs_for_score = 4
+            
+            doc_count_score = min(len(documents), max_docs_for_score) * score_per_doc
+            final_score = min(1.0, base_score + doc_count_score)
+            
+            final_response["quality_score"] = final_score
         
         state["final_response"] = final_response
         

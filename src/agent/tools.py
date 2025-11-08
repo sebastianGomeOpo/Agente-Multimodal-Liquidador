@@ -3,7 +3,7 @@ import re
 import json
 from datetime import datetime
 from typing import List, Dict, Any, Union, Optional
-from langchain_core.tools import tool
+
 from pydantic import BaseModel, Field
 
 # Importaciones de LangChain para el LLM y Pydantic
@@ -56,7 +56,7 @@ class AgentTools:
     para que las herramientas puedan usarlas.
     """
 
-    def __init__(self, indexer: 'MultimodalIndexer', llm: BaseChatModel):
+    def __init__(self, indexer: 'None', llm: 'None'):
         """
         Inicializa el kit de herramientas.
         
@@ -125,7 +125,8 @@ class AgentTools:
 
     # --- Herramienta 1: Calculadora ---
 
-    @tool("calculate_totals", args_schema=CalculateTotalsInput)
+    
+    ##@tool("calculate_totals", args_schema=CalculateTotalsInput)
     def calculate_totals(self, values: List[Union[str, float, int]]) -> Dict[str, float]:
         """
         Calcula la suma total, el promedio, el mínimo y el máximo de una lista
@@ -164,7 +165,7 @@ class AgentTools:
 
     # --- Herramienta 2: Validador de Fechas ---
 
-    @tool("validate_and_normalize_date")
+    ##@tool("validate_and_normalize_date")
     def validate_and_normalize_date(self, date_string: str, output_format: str = "%Y-%m-%d") -> Dict[str, str]:
         """
         Intenta validar un string de fecha contra múltiples formatos comunes
@@ -203,7 +204,8 @@ class AgentTools:
 
     # --- Herramienta 3: Comparador de Valores ---
 
-    @tool("compare_values", args_schema=CompareValuesInput)
+    
+    ##@tool("compare_values", args_schema=CompareValuesInput)
     def compare_values(self, value1: Union[str, float, int], value2: Union[str, float, int]) -> Dict[str, Any]:
         """
         Compara dos valores numéricos (incluso si están como texto con formato
@@ -237,7 +239,7 @@ class AgentTools:
 
     # --- Herramienta 4: Extracción de Información (con LLM) ---
 
-    @tool("extract_key_info", args_schema=ExtractKeyInfoInput)
+    #tool("extract_key_info", args_schema=ExtractKeyInfoInput)
     def extract_key_info(self, document_content: str, keys_to_extract: List[str]) -> Dict[str, Any]:
         """
         Extrae información clave y estructurada de un bloque de texto usando un LLM.
@@ -294,7 +296,7 @@ class AgentTools:
 
     # --- Herramienta 5: Búsqueda por Metadata (en ChromaDB) ---
 
-    @tool("search_by_metadata", args_schema=SearchByMetadataInput)
+    #@tool("search_by_metadata", args_schema=SearchByMetadataInput)
     def search_by_metadata(self, filters: Dict[str, Any]) -> Dict[str, Any]:
         """
         Busca documentos en la base de datos vectorial (ChromaDB) usando
