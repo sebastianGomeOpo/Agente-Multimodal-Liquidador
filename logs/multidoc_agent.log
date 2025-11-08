@@ -222,3 +222,207 @@ landingai_ade.UnprocessableEntityError: Error code: 422 - {'error': 'Unsupported
 2025-11-08 01:08:10,291 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
 2025-11-08 01:08:22,453 - __main__ - INFO - ADE procesó exitosamente la imagen: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
 2025-11-08 01:08:29,739 - __main__ - INFO - ADE procesó exitosamente la imagen: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_page_1.png
+2025-11-08 11:07:14,601 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: LiquidacionData
+2025-11-08 11:07:47,758 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:07:57,100 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:36:12,897 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: LiquidacionData
+2025-11-08 11:37:09,593 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: LiquidacionData
+2025-11-08 11:40:38,933 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 11:40:38,935 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 11:40:55,312 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 11:40:58,872 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 11:41:00,065 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:41:08,121 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:41:08,304 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:44:21,222 - src.extractors.ocr_extractor - INFO - Iniciando PASO 3: Extracción de Markdown (ADE) de todos los documentos...
+2025-11-08 11:44:21,224 - src.extractors.ocr_extractor - INFO - Extractor OCR iniciado con el proveedor: landing_ai
+2025-11-08 11:44:21,226 - src.extractors.ocr_extractor - INFO - Se encontraron 1 PDFs originales para procesar.
+2025-11-08 11:44:21,229 - src.extractors.ocr_extractor - INFO - Se encontraron 8 imágenes de Excel para procesar.
+2025-11-08 11:44:21,230 - src.extractors.ocr_extractor - INFO - Se procesarán 9 documentos en total.
+2025-11-08 11:44:21,231 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 11:44:32,357 - src.extractors.ocr_extractor - INFO - ADE (PDF) completado para: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR.pdf
+2025-11-08 11:44:32,365 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_text.json
+2025-11-08 11:44:32,367 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 11:45:11,821 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 11:45:11,977 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0_text.json
+2025-11-08 11:45:11,979 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 11:45:33,708 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 11:45:33,725 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200_text.json
+2025-11-08 11:45:33,730 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 11:45:49,145 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 11:45:49,240 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250_text.json
+2025-11-08 11:45:49,243 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 11:46:26,959 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 11:46:27,077 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0_text.json
+2025-11-08 11:46:27,080 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 11:46:51,482 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 11:46:51,584 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0_text.json
+2025-11-08 11:46:51,586 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 11:47:32,199 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 11:47:32,430 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0_text.json
+2025-11-08 11:47:32,432 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 11:47:50,354 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 11:47:50,373 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200_text.json
+2025-11-08 11:47:50,380 - src.extractors.ocr_extractor - INFO - Extrayendo contenido de: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 11:48:16,980 - src.extractors.ocr_extractor - INFO - ADE (Imagen) completado para: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 11:48:17,063 - src.extractors.ocr_extractor - INFO - Markdown guardado en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250_text.json
+2025-11-08 11:48:17,067 - src.extractors.ocr_extractor - INFO - Extracción de Markdown completada. 9 archivos procesados.
+2025-11-08 11:48:35,821 - src.extractors.structure_parser - INFO - Iniciando PASO 4: Parseo y Estructuración (Markdown a JSON)...
+2025-11-08 11:48:37,619 - src.extractors.structure_parser - INFO - StructureParser inicializado con el esquema: LiquidacionData
+2025-11-08 11:48:37,622 - src.extractors.structure_parser - INFO - Se encontraron 9 archivos de Markdown para parsear.
+2025-11-08 11:48:37,666 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:48:54,292 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:48:54,298 - src.extractors.structure_parser - INFO - Estructura JSON guardada en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0_structure.json
+2025-11-08 11:48:54,332 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:49:07,057 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:49:07,060 - src.extractors.structure_parser - INFO - Estructura JSON guardada en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200_structure.json
+2025-11-08 11:49:07,084 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:49:34,284 - src.extractors.structure_parser - ERROR - La salida del LLM no validó contra el esquema Pydantic. Error: 2 validation errors for LiquidacionData
+items_detalle
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+resumen_financiero
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+2025-11-08 11:49:34,287 - src.extractors.structure_parser - ERROR - Ocurrió un error inesperado durante el parseo: Datos del LLM no válidos: 2 validation errors for LiquidacionData
+items_detalle
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+resumen_financiero
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\structure_parser.py", line 161, in parse_document
+    validated_data = self.target_schema.model_validate(parsed_json)
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\pydantic\main.py", line 716, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        obj,
+        ^^^^
+    ...<5 lines>...
+        by_name=by_name,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for LiquidacionData
+items_detalle
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+resumen_financiero
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\structure_parser.py", line 168, in parse_document
+    raise ValueError(f"Datos del LLM no válidos: {e}")
+ValueError: Datos del LLM no válidos: 2 validation errors for LiquidacionData
+items_detalle
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+resumen_financiero
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+2025-11-08 11:49:34,292 - src.extractors.structure_parser - ERROR - Fallo al parsear el archivo 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250_text.json: Datos del LLM no válidos: 2 validation errors for LiquidacionData
+items_detalle
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+resumen_financiero
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\structure_parser.py", line 161, in parse_document
+    validated_data = self.target_schema.model_validate(parsed_json)
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\.venv\Lib\site-packages\pydantic\main.py", line 716, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        obj,
+        ^^^^
+    ...<5 lines>...
+        by_name=by_name,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for LiquidacionData
+items_detalle
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+resumen_financiero
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\structure_parser.py", line 216, in process_all_extracted_text
+    structured_data = parser.parse_document(ocr_text)
+  File "c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\src\extractors\structure_parser.py", line 168, in parse_document
+    raise ValueError(f"Datos del LLM no válidos: {e}")
+ValueError: Datos del LLM no válidos: 2 validation errors for LiquidacionData
+items_detalle
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+resumen_financiero
+  Field required [type=missing, input_value={'$defs': {'LiquidacionIt...Data', 'type': 'object'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+2025-11-08 11:49:34,336 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:49:46,073 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:49:46,080 - src.extractors.structure_parser - INFO - Estructura JSON guardada en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0_structure.json
+2025-11-08 11:49:46,182 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:49:54,428 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:49:54,434 - src.extractors.structure_parser - INFO - Estructura JSON guardada en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0_structure.json
+2025-11-08 11:49:54,527 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:50:06,230 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:50:06,239 - src.extractors.structure_parser - INFO - Estructura JSON guardada en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0_structure.json
+2025-11-08 11:50:06,281 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:50:13,793 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:50:13,797 - src.extractors.structure_parser - INFO - Estructura JSON guardada en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200_structure.json
+2025-11-08 11:50:13,829 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:50:22,869 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:50:22,877 - src.extractors.structure_parser - INFO - Estructura JSON guardada en: 10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250_structure.json
+2025-11-08 11:50:22,924 - src.extractors.structure_parser - INFO - Iniciando parseo estructurado de texto (Markdown)...
+2025-11-08 11:50:31,891 - src.extractors.structure_parser - INFO - Parseo y validación de esquema completados exitosamente.
+2025-11-08 11:50:31,894 - src.extractors.structure_parser - INFO - Estructura JSON guardada en: 25105 25106 25107 & 25108 MV SKY KNIGHT - VAL TISUR_structure.json
+2025-11-08 11:50:31,897 - src.extractors.structure_parser - INFO - Parseo completado: 9 archivos procesados.
+2025-11-08 11:50:45,685 - src.embeddings.clip_encoder - INFO - Cargando modelo CLIP: openai/clip-vit-base-patch32
+2025-11-08 11:50:45,687 - src.embeddings.clip_encoder - INFO - Usando device: cpu
+2025-11-08 11:50:50,752 - src.embeddings.clip_encoder - INFO - CLIP encoder cargado exitosamente
+2025-11-08 11:50:50,754 - src.embeddings.clip_encoder - INFO - Procesando 8 imágenes totales (solo Excel)
+2025-11-08 11:50:50,755 - src.embeddings.clip_encoder - INFO - Batch encoding de 8 imágenes
+2025-11-08 11:50:50,756 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c0.png
+2025-11-08 11:50:51,648 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:50:51,672 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c200.png
+2025-11-08 11:50:52,638 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:50:52,660 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r0_c250.png
+2025-11-08 11:50:52,977 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:50:52,981 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r100_c0.png
+2025-11-08 11:50:53,851 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:50:53,867 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r150_c0.png
+2025-11-08 11:50:54,458 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:50:54,470 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c0.png
+2025-11-08 11:50:55,391 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:50:55,406 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c200.png
+2025-11-08 11:50:56,252 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:50:56,265 - src.embeddings.clip_encoder - INFO - Codificando imagen: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\images\excel_images\10841- INFORME GENERAL - MN - SKY KNIGHT  -  LAS BAMBAS   - 09 -10 -2025 (1)_chunk_r50_c250.png
+2025-11-08 11:50:56,565 - src.embeddings.clip_encoder - INFO - Imagen codificada. Dimensión: (512,)
+2025-11-08 11:50:56,603 - src.embeddings.clip_encoder - INFO - Procesando 8 textos (desde JSON estructurados)
+2025-11-08 11:50:56,606 - src.embeddings.clip_encoder - INFO - Batch encoding de 8 textos
+2025-11-08 11:50:56,607 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:50:56,709 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:50:56,712 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:50:56,767 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:50:56,770 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:50:56,833 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:50:56,837 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:50:56,908 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:50:56,912 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:50:56,982 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:50:56,986 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:50:57,056 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:50:57,059 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:50:57,123 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:50:57,128 - src.embeddings.clip_encoder - INFO - Codificando texto (primeros 50 chars): {"numero_factura": null, "fecha_emision": null, "c
+2025-11-08 11:50:57,192 - src.embeddings.clip_encoder - INFO - Texto codificado. Dimensión: (512,)
+2025-11-08 11:50:57,217 - src.embeddings.clip_encoder - INFO - Embeddings guardados: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\embeddings\image_embeddings.json
+2025-11-08 11:50:57,235 - src.embeddings.clip_encoder - INFO - Embeddings guardados: c:\Users\Usuario\Documents\UTEC\Liquidaciones Agent\multidoc-agent\data\embeddings\text_embeddings.json

@@ -5,6 +5,13 @@ from typing import Optional, Dict, Any
 
 # Configuración del logger para este módulo
 logger = logging.getLogger(__name__)
+# --- ¡NUEVAS IMPORTACIONES! ---
+from src.utils.config import (
+    CHROMA_PERSIST_DIR,
+    CHROMA_COLLECTION_NAME,
+    CHROMA_DISTANCE_METRIC
+)
+# ------------------------------
 
 class ChromaManager:
     """
@@ -103,6 +110,35 @@ class ChromaManager:
         except Exception as e:
             logger.error(f"Error al obtener el estado de la colección: {e}", exc_info=True)
             return {"item_count": -1}
+# --- CÓDIGO AÑADIDO ---
+# (Instancia global para caché simple)
+_chroma_manager_instance = None
+
+def get_chroma_manager() -> ChromaManager:
+    """
+    Función Factory para obtener una instancia singleton del ChromaManager.
+    Lee la configuración desde src.utils.config.
+    
+    Returns:
+        ChromaManager: La instancia activa del gestor de ChromaDB.
+    """
+    global _chroma_manager_instance
+    
+    if _chroma_manager_instance is None:
+        logger.info("Creando nueva instancia de ChromaManager...")
+        try:
+            _chroma_manager_instance = ChromaManager(
+                persist_directory=str(CHROMA_PERSIST_DIR),
+                collection_name=CHROMA_COLLECTION_NAME,
+                distance_metric=CHROMA_DISTANCE_METRIC
+            )
+            logger.info("Instancia de ChromaManager creada y cacheada.")
+        except Exception as e:
+            logger.fatal(f"No se pudo inicializar ChromaManager: {e}", exc_info=True)
+            raise
+            
+    return _chroma_manager_instance
+# --- FIN DE CÓDIGO AÑADIDO ---
 
 # Ejemplo de uso (si se ejecuta este archivo directamente)
 if __name__ == "__main__":

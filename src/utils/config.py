@@ -43,7 +43,7 @@ for directory in [
 
 # ============= CONFIGURACIÓN DE MODELOS =============
 CLIP_MODEL_NAME = os.getenv("CLIP_MODEL_NAME", "openai/clip-vit-base-patch32")
-LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4")
+LLM_MODEL = os.getenv("LLM_MODEL", "gpt-5-nano")
 
 # ============= CONFIGURACIÓN DE API KEYS =============
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")

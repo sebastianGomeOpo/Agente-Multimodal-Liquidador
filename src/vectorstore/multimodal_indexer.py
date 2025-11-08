@@ -2,18 +2,22 @@ import logging
 from typing import List, Dict, Any, Optional
 from PIL import Image
 import numpy as np
+import json
+from pathlib import Path
 
 # Importaciones de módulos del proyecto
-from .chroma_manager import ChromaManager
-from ..embeddings.clip_encoder import ClipEncoder # Dependencia clave
+from .chroma_manager import ChromaManager, get_chroma_manager # ¡Importación añadida!
+# (Importar ClipEncoder desde el módulo de embeddings)
+from ..embeddings.clip_encoder import CLIPEncoder 
 
 # --- ¡NUEVAS IMPORTACIONES! ---
-# Importar configs para instanciación por defecto
+# Importar configs para instanciación por defecto Y para leer embeddings
 from ..utils.config import (
     CHROMA_PERSIST_DIR,
     CHROMA_COLLECTION_NAME,
     CHROMA_DISTANCE_METRIC,
-    CLIP_MODEL_NAME
+    CLIP_MODEL_NAME,
+    EMBEDDINGS_DIR # <- ¡Importante para leer los JSON!
 )
 # --- FIN DE NUEVAS IMPORTACIONES ---
 
@@ -28,8 +32,7 @@ class MultimodalIndexer:
     Esta clase es el puente entre el codificador (CLIP) y la base de datos (ChromaDB).
     """
     
-    # --- ¡CONSTRUCTOR MODIFICADO! ---
-    def __init__(self, chroma_manager: Optional[ChromaManager] = None, clip_encoder: Optional[ClipEncoder] = None):
+    def __init__(self, chroma_manager: Optional[ChromaManager] = None, clip_encoder: Optional[CLIPEncoder] = None):
         """
         Inicializa el indexador.
         
@@ -47,44 +50,43 @@ class MultimodalIndexer:
             logger.info("No se proveyó ClipEncoder, creando instancia por defecto...")
             # Asumimos que ClipEncoder puede ser instanciado sin argumentos
             # o que usa CLIP_MODEL_NAME por defecto desde config.
-            self.encoder = ClipEncoder() 
+            self.encoder = CLIPEncoder() 
             logger.info("Instancia de ClipEncoder por defecto creada.")
         
         if chroma_manager:
             self.manager = chroma_manager
             logger.info("MultimodalIndexer inicializado con ChromaManager provisto.")
         else:
-            logger.info("No se proveyó ChromaManager, creando instancia por defecto...")
-            # Usamos str() en el Path por si ChromaDB lo requiere
-            self.manager = ChromaManager(
-                persist_directory=str(CHROMA_PERSIST_DIR),
-                collection_name=CHROMA_COLLECTION_NAME,
-                distance_metric=CHROMA_DISTANCE_METRIC
-            )
-            logger.info("Instancia de ChromaManager por defecto creada.")
+            logger.info("No se proveyó ChromaManager, usando get_chroma_manager() por defecto...")
+            # --- CORRECCIÓN ---
+            # Usar la función factory para obtener la instancia global
+            self.manager = get_chroma_manager() 
+            # ------------------
+            logger.info("Instancia de ChromaManager por defecto obtenida.")
 
         self.collection = self.manager.get_collection()
         logger.info("MultimodalIndexer inicializado y listo.")
-    # --- FIN DE CONSTRUCTOR MODIFICADO ---
 
-    def _generate_unique_id(self, metadata: Dict[str, Any]) -> str:
+    def _generate_unique_id(self, metadata: Dict[str, Any], doc_type: str) -> str:
         """
         Genera un ID único basado en la metadata para evitar duplicados.
         Ejemplo: "pdf_doc_final_page_3" o "excel_reporte_ventas_sheet_1"
         """
-        doc_type = metadata.get("type", "unknown")
+        doc_type = metadata.get("type", doc_type) # Usar el doc_type como fallback
         source = metadata.get("source", "unknown").replace(" ", "_").replace("/", "_")
+        
+        # Usar Path(source).stem para quitar extensiones (ej. .png, .json)
+        source_stem = Path(source).stem
+        
         page = metadata.get("page", 0)
         
-        if doc_type == "pdf_image":
-            return f"pdf_{source}_p{page}"
-        elif doc_type == "excel_image":
-            return f"excel_{source}"
+        if doc_type == "image": # Tipo unificado para todas las imágenes
+            return f"img_{source_stem}"
         elif doc_type == "text":
-            return f"text_{source}"
+            return f"txt_{source_stem}"
         else:
-            # Fallback simple basado en el hash del documento (si está disponible)
-            return f"{doc_type}_{hash(metadata.get('document', ''))}"
+            # Fallback simple
+            return f"{doc_type}_{hash(metadata.get('source', ''))}"
 
     def index_document(self, document: Any, metadata: Dict[str, Any], doc_type: str):
         """
@@ -121,7 +123,7 @@ class MultimodalIndexer:
                 return
 
             # Generar ID único
-            doc_id = self._generate_unique_id(metadata)
+            doc_id = self._generate_unique_id(metadata, doc_type) # <- doc_type añadido
 
             # Añadir a ChromaDB
             self.collection.add(
@@ -133,7 +135,7 @@ class MultimodalIndexer:
             logger.info(f"Documento indexado exitosamente con ID: {doc_id}")
 
         except Exception as e:
-            logger.error(f"Error al indexar documento (ID: {doc_id}): {e}", exc_info=True)
+            logger.error(f"Error al indexar documento: {e}", exc_info=True) # ID puede no estar definido aquí
 
     def index_batch(self, documents: List[Any], metadatas: List[Dict[str, Any]], doc_types: List[str]):
         """
@@ -176,7 +178,7 @@ class MultimodalIndexer:
                     embeddings_list.append(embedding.tolist())
                     documents_list.append(doc_content)
                     metadatas_list.append(meta)
-                    ids_list.append(self._generate_unique_id(meta))
+                    ids_list.append(self._generate_unique_id(meta, doc_type)) # <- doc_type añadido
 
             except Exception as e:
                 logger.error(f"Error procesando ítem de lote: {meta.get('source', 'unknown')}. Error: {e}", exc_info=True)
@@ -224,21 +226,211 @@ class MultimodalIndexer:
                 where=filters if filters else {} # Aplicar filtros si se proveen
             )
             
-            logger.info(f"Búsqueda semántica para '{query_text}' completada. Encontrados {len(results.get('ids', [[]])[0])} resultados.")
-            return results
+            logger.info(f"Búsqueda semántica para '{query_text[:50]}' completada. Encontrados {len(results.get('ids', [[]])[0])} resultados.")
+            
+            # --- CORRECCIÓN ---
+            # Los resultados de ChromaDB están anidados en una lista extra
+            # (porque se puede consultar por múltiples embeddings a la vez).
+            # Debemos aplanar la salida para el agente.
+            
+            if not results or not results.get('ids') or not results['ids'][0]:
+                logger.info("La búsqueda no arrojó resultados.")
+                return {"count": 0, "documents": []}
+
+            # Aplanar la lista de resultados (tomamos el índice [0])
+            ids = results['ids'][0]
+            documents = results['documents'][0]
+            metadatas = results['metadatas'][0]
+            distances = results['distances'][0]
+
+            formatted_results = []
+            for id_val, doc, meta, dist in zip(ids, documents, metadatas, distances):
+                formatted_results.append({
+                    "id": id_val,
+                    "document": doc,
+                    "metadata": meta,
+                    "distance": dist
+                })
+
+            return {"count": len(formatted_results), "documents": formatted_results}
+            # --- FIN DE CORRECCIÓN ---
 
         except Exception as e:
             logger.error(f"Error durante la búsqueda semántica: {e}", exc_info=True)
             return {}
 
+    # --- CÓDIGO AÑADIDO (Función 1) ---
+    def get_collection_stats(self) -> Dict[str, Any]:
+        """
+        Obtiene estadísticas detalladas de la colección,
+        contando por tipo de documento en los metadatos.
+        """
+        logger.info(f"Obteniendo estadísticas de la colección '{self.collection.name}'...")
+        try:
+            stats = {"total_documents": 0, "image_documents": 0, "text_documents": 0, "multimodal": False}
+            
+            # count() es la forma más rápida de obtener el total
+            stats["total_documents"] = self.collection.count()
+            
+            if stats["total_documents"] == 0:
+                logger.info("La colección está vacía.")
+                return stats
+
+            # get() sin 'where' para obtener metadatos de todo
+            # (Limitado a 5000 por seguridad, ajustar si es necesario)
+            all_metadatas = self.collection.get(limit=5000, include=["metadatas"])['metadatas']
+
+            for meta in all_metadatas:
+                doc_type = meta.get('type', 'unknown')
+                if doc_type == 'image':
+                    stats['image_documents'] += 1
+                elif doc_type == 'text':
+                    stats['text_documents'] += 1
+            
+            stats['multimodal'] = stats['image_documents'] > 0 and stats['text_documents'] > 0
+            
+            logger.info(f"Estadísticas obtenidas: {stats}")
+            return stats
+
+        except Exception as e:
+            logger.error(f"Error al obtener estadísticas de la colección: {e}", exc_info=True)
+            return {"error": str(e)}
+
+    # --- CÓDIGO AÑADIDO (Función 2) ---
+    def list_documents(self, limit: int = 10, offset: int = 0, doc_type: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Lista los documentos actualmente en la colección.
+        """
+        try:
+            where_filter = {}
+            if doc_type:
+                where_filter = {"type": doc_type}
+                
+            results = self.collection.get(
+                limit=limit,
+                offset=offset,
+                where=where_filter,
+                include=["metadatas", "documents"]
+            )
+            
+            formatted_results = [
+                {"id": id_val, "metadata": meta, "document": doc}
+                for id_val, meta, doc in zip(results['ids'], results['metadatas'], results['documents'])
+            ]
+            
+            return {"count": len(formatted_results), "documents": formatted_results}
+        
+        except Exception as e:
+            logger.error(f"Error al listar documentos: {e}", exc_info=True)
+            return {"error": str(e)}
+
+# --- CÓDIGO AÑADIDO (Función 3) ---
+def index_all_embeddings() -> Dict[str, Any]:
+    """
+    Función orquestadora (Paso 5)
+    Carga los archivos JSON de embeddings generados por el Paso 4 (CLIP)
+    y los indexa en ChromaDB.
+    """
+    logger.info("Iniciando PASO 5: Indexación de todos los embeddings...")
+    
+    try:
+        indexer = MultimodalIndexer() # Obtiene instancia por defecto
+        
+        image_embeddings_file = EMBEDDINGS_DIR / "image_embeddings.json"
+        text_embeddings_file = EMBEDDINGS_DIR / "text_embeddings.json"
+        
+        stats = {"images_indexed": 0, "texts_indexed": 0, "total_indexed": 0, "errors": []}
+        
+        # 1. Indexar Imágenes
+        if image_embeddings_file.exists():
+            with open(image_embeddings_file, 'r', encoding='utf-8') as f:
+                image_data = json.load(f)
+            
+            logger.info(f"Procesando {len(image_data)} embeddings de imágenes...")
+            img_embeddings, img_metadatas, img_ids, img_documents = [], [], [], []
+            
+            for key, data in image_data.items():
+                try:
+                    img_embeddings.append(data['embedding'])
+                    meta = {"source": data['source'], "type": "image"}
+                    img_metadatas.append(meta)
+                    img_documents.append(f"Imagen de Excel: {data['source']}") # Documento es solo texto
+                    img_ids.append(indexer._generate_unique_id(meta, "image"))
+                except Exception as e:
+                    logger.warning(f"Error procesando embedding de imagen {key}: {e}")
+                    stats['errors'].append(f"img:{key} - {e}")
+
+            if img_ids:
+                indexer.collection.add(
+                    embeddings=img_embeddings,
+                    documents=img_documents,
+                    metadatas=img_metadatas,
+                    ids=img_ids
+                )
+                stats['images_indexed'] = len(img_ids)
+                logger.info(f"{len(img_ids)} embeddings de imagen indexados.")
+        else:
+            logger.warning("No se encontró 'image_embeddings.json'.")
+
+        # 2. Indexar Textos (JSONs Estructurados)
+        if text_embeddings_file.exists():
+            with open(text_embeddings_file, 'r', encoding='utf-8') as f:
+                text_data = json.load(f)
+                
+            logger.info(f"Procesando {len(text_data)} embeddings de texto...")
+            txt_embeddings, txt_metadatas, txt_ids, txt_documents = [], [], [], []
+            
+            for key, data in text_data.items():
+                try:
+                    txt_embeddings.append(data['embedding'])
+                    # El 'content' es el JSON estructurado como string
+                    doc_content = data['content'] 
+                    # Los metadatos los extraemos del propio JSON
+                    meta = {"source": data.get('source', 'unknown.json'), "type": "text"}
+                    try:
+                        # Intentar parsear el JSON para metadatos más ricos
+                        content_json = json.loads(doc_content)
+                        meta['numero_factura'] = content_json.get('numero_factura')
+                        meta['cliente_nombre'] = content_json.get('cliente_nombre')
+                    except:
+                        pass # Si falla, solo usamos la fuente
+                    
+                    txt_metadatas.append(meta)
+                    txt_documents.append(doc_content) # El documento es el JSON como string
+                    txt_ids.append(indexer._generate_unique_id(meta, "text"))
+                except Exception as e:
+                    logger.warning(f"Error procesando embedding de texto {key}: {e}")
+                    stats['errors'].append(f"txt:{key} - {e}")
+
+            if txt_ids:
+                indexer.collection.add(
+                    embeddings=txt_embeddings,
+                    documents=txt_documents,
+                    metadatas=txt_metadatas,
+                    ids=txt_ids
+                )
+                stats['texts_indexed'] = len(txt_ids)
+                logger.info(f"{len(txt_ids)} embeddings de texto indexados.")
+        else:
+            logger.warning("No se encontró 'text_embeddings.json'.")
+
+        stats['total_indexed'] = stats['images_indexed'] + stats['texts_indexed']
+        logger.info(f"Indexación completada. Total: {stats['total_indexed']} documentos.")
+        return stats
+
+    except Exception as e:
+        logger.error(f"Error fatal durante index_all_embeddings: {e}", exc_info=True)
+        return {"error": str(e)}
+
+# --- FIN DE CÓDIGO AÑADIDO ---
+
+
 # Ejemplo de uso (requeriría mocks de ChromaManager y ClipEncoder)
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    logger.info("Probando MultimodalIndexer (requiere mocks)...")
+    logger.info("Probando MultimodalIndexer (con mocks)...")
     
     # --- Mocking ---
-    # En un escenario real, estas clases serían importadas y no mockeadas
-    
     class MockClipEncoder:
         def encode_text(self, text: str) -> np.ndarray:
             print(f"MOCK: Codificando texto: '{text[:20]}...'")
@@ -260,10 +452,22 @@ if __name__ == "__main__":
                 'metadatas': [[{'source': 'mock1.txt'}, {'source': 'mock2.png'}]],
                 'distances': [[0.123, 0.456]]
             }
+        
+        def count(self):
+            print("MOCK DB: Contando documentos.")
+            return 2
+        
+        def get(self, limit, include, offset=None, where=None):
+            print("MOCK DB: Obteniendo metadatos.")
+            return {'metadatas': [{'type': 'image'}, {'type': 'text'}]}
+
     
     class MockChromaManager:
+        def __init__(self, *args, **kwargs):
+            self.collection = MockChromaCollection()
+            
         def get_collection(self):
-            return MockChromaCollection()
+            return self.collection
 
     # --- Fin del Mocking ---
     
@@ -271,17 +475,19 @@ if __name__ == "__main__":
     mock_encoder = MockClipEncoder()
     mock_manager = MockChromaManager()
     
-    # 2. Inicializar el indexador
+    # 2. Sobrescribir 'get_chroma_manager' para que devuelva el mock
+    # (Esto es solo para el test __main__)
+    # Asignamos directamente en el ámbito de módulo sin usar 'global'
+    get_chroma_manager = lambda: mock_manager
+    
+    # 3. Inicializar el indexador (ahora usará los mocks)
     indexer = MultimodalIndexer(mock_manager, mock_encoder)
     
-    # 3. Probar indexación
+    # 4. Probar indexación
     print("\n--- Probando indexación ---")
     
-    # Simular una imagen PIL
     mock_image = Image.new('RGB', (100, 100), color = 'red')
     meta_image = {"source": "reporte.xlsx", "type": "excel_image"}
-    
-    # Simular texto
     mock_text = "Esto es el contenido de una liquidación de prueba."
     meta_text = {"source": "liquidacion.pdf", "page": 1, "type": "text"}
     
@@ -291,10 +497,16 @@ if __name__ == "__main__":
         doc_types=['image', 'text']
     )
     
-    # 4. Probar búsqueda
+    # 5. Probar búsqueda
     print("\n--- Probando búsqueda ---")
     query = "¿Cuál es el total del reporte?"
     results = indexer.semantic_search(query_text=query, k=2)
     
     print("\nResultados de búsqueda:")
-    print(results)
+    print(json.dumps(results, indent=2))
+    
+    # 6. Probar estadísticas
+    print("\n--- Probando estadísticas ---")
+    stats = indexer.get_collection_stats()
+    print("\nResultados de estadísticas:")
+    print(json.dumps(stats, indent=2))
